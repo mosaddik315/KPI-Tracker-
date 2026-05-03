@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>KPI Tracker – Sirat</title>
+<meta name="theme-color" id="theme-meta" content="#00000f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="KPI">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   DEEP SPACE THEME — NEBULA INDIGO SYSTEM
+══════════════════════════════════════════ */
+:root{
+  --f1:8px;--f2:13px;--f3:21px;--f4:34px;--f5:55px;--f6:89px;--f7:144px;
+  --phi:1.618;
+  --fs-xs:10px;--fs-sm:13px;--fs-base:16px;--fs-md:26px;--fs-lg:42px;--fs-xl:68px;
+  --font-d:'Bebas Neue',sans-serif;
+  --font-b:'DM Sans',sans-serif;
+  --font-m:'Space Mono',monospace;
+
+  /* SPACE PALETTE */
+  --acc:#6C34E0;--acc-l:#9B6FFF;--acc-p:rgba(108,52,224,0.12);
+  --star-gold:#FFD700;--star-gold-p:rgba(255,215,0,0.1);
+  --teal:#38c9b0;--teal-p:rgba(56,201,176,0.1);
+  --danger:#e05c5c;--danger-p:rgba(224,92,92,0.1);
+  --violet:#9b7fff;--violet-p:rgba(155,127,255,0.1);
+
+  --bg:rgba(0,0,15,1);--bg2:rgba(0,0,20,1);
+  --surf:rgba(0,0,15,0.7);--surf2:rgba(108,52,224,0.06);
+  --brd:1px solid rgba(108,52,224,0.1);
+  --brd-val:rgba(108,52,224,0.1);
+  --txt:#e8e4ff;--txt-m:rgba(232,228,255,0.68);--txt-d:rgba(232,228,255,0.36);
+
+  --shadow-g:0 8px 32px rgba(108,52,224,0.2);
+  --shadow-c:0 4px 24px rgba(0,0,0,0.7);
+  --r-sm:var(--f2);--r-md:var(--f3);--r-lg:var(--f4);
+  --nav-h:68px;--safe-b:env(safe-area-inset-bottom,0px);
+}
+
+/* ── DAWN: Deep purple base, soft lavender ── */
+body.theme-dawn{
+  --bg:rgba(10,4,28,1);--bg2:rgba(18,8,40,1);
+  --surf:rgba(10,4,28,0.75);--surf2:rgba(108,52,224,0.08);
+  --brd-val:rgba(160,100,255,0.15);
+  --txt:#f0e8ff;--txt-m:rgba(240,232,255,0.72);--txt-d:rgba(240,232,255,0.4);
+  --acc:#8B50FF;--acc-l:#b590ff;--acc-p:rgba(139,80,255,0.14);
+  --shadow-g:0 8px 32px rgba(139,80,255,0.25);
+}
+/* ── DAY: Very light sky blue, stark white fg ── */
+body.theme-day{
+  --bg:rgba(230,240,255,1);--bg2:rgba(215,228,252,1);
+  --surf:rgba(200,218,250,0.7);--surf2:rgba(108,52,224,0.07);
+  --brd-val:rgba(108,52,224,0.2);
+  --txt:#0a0520;--txt-m:rgba(10,5,32,0.65);--txt-d:rgba(10,5,32,0.35);
+  --acc:#5A20D0;--acc-l:#7B45E8;--acc-p:rgba(90,32,208,0.1);
+  --teal:#1a9a84;
+  --shadow-g:0 8px 32px rgba(90,32,208,0.15);
+  --shadow-c:0 4px 24px rgba(0,0,0,0.08);
+}
+/* ── SUNSET: Burnt indigo, warm magenta shifts ── */
+body.theme-sunset{
+  --bg:rgba(8,2,22,1);--bg2:rgba(16,4,34,1);
+  --surf:rgba(8,2,22,0.8);--surf2:rgba(180,40,120,0.07);
+  --brd-val:rgba(180,60,200,0.15);
+  --txt:#ffe8f8;--txt-m:rgba(255,232,248,0.7);--txt-d:rgba(255,232,248,0.38);
+  --acc:#C040A0;--acc-l:#e870cc;--acc-p:rgba(192,64,160,0.12);
+  --shadow-g:0 8px 32px rgba(192,64,160,0.25);
+}
+/* ── NIGHT: True void black, galaxy bg ── */
+body.theme-night{
+  --bg:rgba(0,0,0,1);--bg2:rgba(2,0,8,1);
+  --surf:rgba(0,0,10,0.8);--surf2:rgba(108,52,224,0.05);
+  --brd-val:rgba(108,52,224,0.08);
+  --txt:#dde0ff;--txt-m:rgba(221,224,255,0.65);--txt-d:rgba(221,224,255,0.32);
+  --acc:#6C34E0;--acc-l:#9B6FFF;--acc-p:rgba(108,52,224,0.1);
+  --shadow-g:0 8px 32px rgba(108,52,224,0.18);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent;}
+
+/* STAR FIELD BACKGROUND */
+body{
+  font-family:var(--font-b);font-size:var(--fs-base);line-height:1.618;
+  color:var(--txt);background:var(--bg);min-height:100dvh;overflow-x:hidden;
+  transition:background 4s ease,color 4s ease;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(1px 1px at 10% 15%,rgba(255,255,255,0.6) 0%,transparent 100%),
+    radial-gradient(1px 1px at 25% 42%,rgba(255,255,255,0.4) 0%,transparent 100%),
+    radial-gradient(1px 1px at 38% 8%,rgba(200,180,255,0.7) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 52% 28%,rgba(255,255,255,0.5) 0%,transparent 100%),
+    radial-gradient(1px 1px at 67% 55%,rgba(255,255,255,0.4) 0%,transparent 100%),
+    radial-gradient(1px 1px at 78% 18%,rgba(200,200,255,0.6) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 88% 38%,rgba(255,255,255,0.3) 0%,transparent 100%),
+    radial-gradient(1px 1px at 15% 68%,rgba(255,255,255,0.5) 0%,transparent 100%),
+    radial-gradient(1px 1px at 42% 75%,rgba(180,200,255,0.4) 0%,transparent 100%),
+    radial-gradient(1px 1px at 60% 85%,rgba(255,255,255,0.3) 0%,transparent 100%),
+    radial-gradient(1px 1px at 82% 70%,rgba(255,255,255,0.5) 0%,transparent 100%),
+    radial-gradient(2px 2px at 5% 90%,rgba(200,180,255,0.3) 0%,transparent 100%),
+    radial-gradient(1px 1px at 93% 5%,rgba(255,255,255,0.6) 0%,transparent 100%),
+    radial-gradient(1px 1px at 35% 95%,rgba(255,255,255,0.4) 0%,transparent 100%),
+    radial-gradient(1px 1px at 70% 3%,rgba(200,180,255,0.5) 0%,transparent 100%);
+  opacity:0.015;
+  animation:starDrift 120s linear infinite;
+}
+@keyframes starDrift{0%{transform:translateY(0) translateX(0);}100%{transform:translateY(-40px) translateX(20px);}}
+
+body.theme-day::before{opacity:0.005;}
+body.theme-night::before{opacity:0.03;}
+
+::selection{background:var(--acc);color:#fff;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--acc);border-radius:2px;}
+
+/* ── TYPOGRAPHY ── */
+.td{font-family:var(--font-d);letter-spacing:0.04em;}
+.tm{font-family:var(--font-m);letter-spacing:0.12em;}
+.t-acc{color:var(--acc);}
+.t-teal{color:var(--teal);}
+.t-violet{color:var(--violet);}
+.t-gold{color:var(--star-gold);}
+.grad{background:linear-gradient(135deg,var(--acc),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.eyebrow{font-family:var(--font-m);font-size:var(--fs-xs);letter-spacing:0.18em;text-transform:uppercase;color:var(--acc);display:flex;align-items:center;gap:var(--f2);margin-bottom:var(--f2);}
+.eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--acc);flex-shrink:0;}
+
+/* ── LAYOUT ── */
+#app{min-height:100dvh;padding-bottom:calc(var(--nav-h) + var(--safe-b) + var(--f2));position:relative;z-index:1;}
+.view{display:none;min-height:calc(100dvh - var(--nav-h));padding:var(--f4) var(--f3) var(--f5);animation:viewIn .32s cubic-bezier(.4,0,.2,1);}
+.view.active{display:block;}
+@keyframes viewIn{from{opacity:0;transform:translateY(var(--f3));}to{opacity:1;transform:translateY(0);}}
+
+/* ── BOTTOM NAV ── */
+.bnav{position:fixed;bottom:0;left:0;right:0;height:calc(var(--nav-h) + var(--safe-b));padding-bottom:var(--safe-b);display:flex;z-index:200;background:rgba(0,0,15,0.88);backdrop-filter:blur(24px) saturate(1.8);border-top:1px solid var(--brd-val);transition:background 4s,border-color 4s;}
+body.theme-day .bnav{background:rgba(220,232,255,0.92);}
+body.theme-dawn .bnav{background:rgba(10,4,28,0.92);}
+body.theme-sunset .bnav{background:rgba(8,2,22,0.92);}
+body.theme-night .bnav{background:rgba(0,0,4,0.95);}
+
+.nbtn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:none;background:transparent;color:var(--txt-d);cursor:pointer;transition:color .2s,transform .15s;padding:var(--f1) 0;}
+.nbtn:active{transform:scale(.92);}
+.nbtn.active{color:var(--acc);}
+.nicon{width:40px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:var(--f2);font-size:19px;transition:background .2s;}
+.nbtn.active .nicon{background:var(--acc-p);}
+.nlabel{font-family:var(--font-m);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;}
+
+/* ── THEME BAR ── */
+.tbar{position:fixed;top:var(--f3);right:var(--f3);display:flex;gap:4px;align-items:center;background:rgba(0,0,15,0.7);backdrop-filter:blur(20px);border:1px solid var(--brd-val);border-radius:50px;padding:5px var(--f2);z-index:300;transition:background 4s,border-color 4s;}
+body.theme-day .tbar{background:rgba(220,232,255,0.85);}
+.tbtn{width:30px;height:30px;border:none;background:transparent;font-size:15px;cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s;}
+.tbtn:hover{background:var(--surf2);transform:scale(1.15);}
+.tbtn.active{background:var(--acc-p);}
+.tbadge{font-family:var(--font-m);font-size:8px;letter-spacing:0.1em;color:var(--acc);padding:2px 6px;background:var(--acc-p);border-radius:50px;}
+
+/* ── PROGRESS BAR ── */
+#spb{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--acc),var(--teal));width:0%;z-index:999;transition:width .1s;pointer-events:none;}
+
+/* ── CARDS — ORBITAL FLOAT ── */
+.card{
+  background:rgba(0,0,15,0.6);
+  border:1px solid var(--brd-val);
+  border-radius:var(--r-md);padding:var(--f3);position:relative;overflow:hidden;
+  transition:border-color .3s,transform .4s,box-shadow .3s;
+  backdrop-filter:blur(12px);
+  animation:orbital 18s ease-in-out infinite;
+}
+@keyframes orbital{
+  0%{transform:translate(0,0);}
+  25%{transform:translate(1.5px,-2px);}
+  50%{transform:translate(2px,1px);}
+  75%{transform:translate(-1px,2px);}
+  100%{transform:translate(0,0);}
+}
+/* HORIZONTAL TRAVELING ACCENT LINE */
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--acc),var(--teal),transparent);
+  transform:translateX(-100%);
+  transition:transform 0s;
+}
+.card:hover{border-color:var(--acc);box-shadow:var(--shadow-g);}
+.card:hover::before{transform:translateX(100%);transition:transform .6s ease;}
+.card-hi{border-color:var(--acc);box-shadow:var(--shadow-g);}
+.card-hi::before{transform:translateX(0);background:linear-gradient(90deg,var(--acc),var(--teal));}
+.card-violet{border-color:var(--violet) !important;}
+.card-violet::before{background:linear-gradient(90deg,var(--violet),var(--teal)) !important;}
+
+/* ── PROGRESS BARS ── */
+.ptr{height:4px;background:var(--surf2);border-radius:2px;overflow:hidden;}
+.pfl{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--acc),var(--acc-l));transition:width .8s cubic-bezier(.4,0,.2,1);}
+.pfl.teal{background:linear-gradient(90deg,var(--teal),#6ee8d8);}
+.pfl.violet{background:linear-gradient(90deg,var(--violet),#c8b8ff);}
+.pfl.full{background:linear-gradient(90deg,var(--star-gold),var(--teal));}
+
+/* ── DASHBOARD ── */
+.dash-hd{padding-top:var(--f5);margin-bottom:var(--f4);}
+.dash-date{font-family:var(--font-m);font-size:var(--fs-xs);letter-spacing:0.16em;color:var(--txt-d);text-transform:uppercase;margin-bottom:var(--f1);}
+.dash-greet{font-family:var(--font-d);font-size:clamp(40px,11vw,68px);line-height:.95;margin-bottom:var(--f1);}
+.dash-tag{font-size:var(--fs-sm);color:var(--txt-m);}
+.now-card{background:linear-gradient(135deg,var(--acc-p),rgba(56,201,176,0.07));border:1px solid var(--brd-val);border-radius:var(--r-md);padding:var(--f3);margin-bottom:var(--f3);transition:background 4s,border-color 4s;position:relative;overflow:hidden;}
+.now-card::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top left,rgba(108,52,224,0.08),transparent 60%);pointer-events:none;}
+.now-lbl{font-family:var(--font-m);font-size:10px;letter-spacing:0.2em;color:var(--acc);text-transform:uppercase;margin-bottom:var(--f1);display:flex;align-items:center;gap:var(--f1);}
+.ndot{width:6px;height:6px;background:var(--acc);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);box-shadow:0 0 0 0 rgba(108,52,224,0.4);}50%{opacity:.7;transform:scale(1.4);box-shadow:0 0 0 6px rgba(108,52,224,0);}}
+.now-title{font-family:var(--font-d);font-size:var(--fs-md);color:var(--txt);margin-bottom:3px;line-height:1.1;}
+.now-sub{font-family:var(--font-m);font-size:var(--fs-xs);color:var(--txt-m);}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:var(--f2);margin-bottom:var(--f3);}
+.sc{background:rgba(0,0,15,0.5);border:1px solid var(--brd-val);border-radius:var(--r-sm);padding:var(--f3) var(--f2);text-align:center;transition:background 4s,border-color 4s;backdrop-filter:blur(8px);}
+.snum{font-family:var(--font-d);font-size:clamp(28px,8vw,42px);color:var(--acc);display:block;line-height:1;}
+.slbl{font-family:var(--font-m);font-size:9px;letter-spacing:0.14em;color:var(--txt-d);text-transform:uppercase;margin-top:4px;}
+.trem{background:rgba(0,0,15,0.5);border:1px solid var(--brd-val);border-radius:var(--r-md);padding:var(--f3);margin-bottom:var(--f3);transition:background 4s,border-color 4s;}
+.fb{display:flex;align-items:center;justify-content:space-between;}
+.fr{display:flex;align-items:center;gap:var(--f2);}
+.mt1{margin-top:var(--f1);}.mt2{margin-top:var(--f2);}.mt3{margin-top:var(--f3);}.mt4{margin-top:var(--f4);}
+.mb1{margin-bottom:var(--f1);}.mb2{margin-bottom:var(--f2);}.mb3{margin-bottom:var(--f3);}.mb4{margin-bottom:var(--f4);}
+.vh{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:var(--f4);padding-top:var(--f5);}
+.vtitle{font-family:var(--font-d);font-size:clamp(34px,10vw,55px);line-height:1;}
+.btn-add{background:var(--acc);color:#fff;border:none;border-radius:var(--r-sm);padding:var(--f1) var(--f3);font-family:var(--font-m);font-size:var(--fs-xs);letter-spacing:0.1em;cursor:pointer;font-weight:700;transition:transform .2s,box-shadow .2s;box-shadow:var(--shadow-g);flex-shrink:0;}
+.btn-add:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 12px 40px rgba(108,52,224,0.35);}
+
+/* ── TASKS ── */
+.tlist{display:flex;flex-direction:column;gap:var(--f2);}
+.titem{display:flex;align-items:flex-start;gap:var(--f2);background:rgba(0,0,15,0.5);border:1px solid var(--brd-val);border-radius:var(--r-sm);padding:var(--f2) var(--f3);transition:all .3s;cursor:pointer;position:relative;overflow:hidden;backdrop-filter:blur(8px);}
+.titem.now-hi{border-color:var(--acc);background:var(--acc-p);}
+.titem.done{opacity:.5;}
+.titem.done .ttitle{text-decoration:line-through;}
+.tcheck{width:22px;height:22px;border:2px solid var(--brd-val);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;transition:all .2s;font-size:12px;}
+.titem.done .tcheck{background:var(--teal);border-color:var(--teal);color:white;}
+.titem.now-hi .tcheck{border-color:var(--acc);color:var(--acc);}
+.tbody{flex:1;min-width:0;}
+.ttitle{font-size:var(--fs-base);font-weight:500;margin-bottom:3px;}
+.ttime{font-family:var(--font-m);font-size:var(--fs-xs);color:var(--txt-d);}
+.tcat{font-family:var(--font-m);font-size:9px;padding:2px var(--f1);background:var(--surf2);border-radius:var(--f1);color:var(--txt-d);letter-spacing:0.08em;text-transform:uppercase;align-self:flex-start;white-space:nowrap;flex-shrink:0;}
+.tdel{position:absolute;right:var(--f2);top:50%;transform:translateY(-50%);background:var(--danger-p);border:none;border-radius:var(--f1);color:var(--danger);width:26px;height:26px;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:opacity .2s;font-size:11px;}
+.titem:hover .tdel{opacity:1;}
+
+/* ── GOALS ── */
+.ptabs{display:flex;gap:var(--f1);background:rgba(0,0,15,0.4);border-radius:var(--r-sm);padding:var(--f1);margin-bottom:var(--f4);}
+.ptab{flex:1;border:none;background:transparent;color:var(--txt-d);font-family:var(--font-m);font-size:var(--fs-xs);letter-spacing:0.08em;text-transform:uppercase;padding:var(--f1) var(--f2);border-radius:8px;cursor:pointer;transition:all .2s;}
+.ptab.active{background:var(--acc);color:#fff;font-weight:700;}
+.gitm{background:rgba(0,0,15,0.5);border:1px solid var(--brd-val);border-radius:var(--r-sm);padding:var(--f3);margin-bottom:var(--f2);transition:border-color .3s;backdrop-filter:blur(8px);}
+.gitm.done{border-color:var(--star-gold);}
+.ghd{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--f2);gap:var(--f2);}
+.gtitle{font-size:var(--fs-base);font-weight:500;flex:1;}
+.gpct{font-family:var(--font-d);font-size:var(--fs-md);color:var(--acc);}
+.gitm.done .gpct{color:var(--star-gold);}
+.gmeta{display:flex;justify-content:space-between;margin-top:var(--f1);}
+.gmeta span{font-family:var(--font-m);font-size:var(--fs-xs);color:var(--txt-d);}
+.gctrl{display:flex;gap:var(--f1);margin-top:var(--f2);align-items:center;}
+.gnum{background:var(--surf2);border:1px solid var(--brd-val);border-radius:var(--f1);color:var(--txt);font-family:var(--font-m);font-size:var(--fs-sm);padding:var(--f1) var(--f2);width:75px;text-align:center;outline:none;transition:border-color .2s;}
+.gnum:focus{border-color:var(--acc);}
+.bsm{background:var(--surf2);border:1px solid var(--brd-val);border-radius:var(--f1);color:var(--txt-m);font-family:var(--font-m);font-size:var(--fs-xs);padding:var(--f1) var(--f2);cursor:pointer;transition:all .2s;}
+.bsm:hover{border-color:var(--acc);color:var(--acc);}
+.bsm.d:hover{border-color:var(--danger);color:var(--danger);}
+.gstats{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--f2);margin-bottom:var(--f4);}
+.gsc{background:rgba(0,0,15,0.5);border:1px solid var(--brd-val);border-radius:var(--r-sm);padding:var(--f2);text-align:center;transition:background 4s,border-color 4s;}
+.gsn{font-family:var(--font-d);font-size:var(--fs-md);color:var(--teal);display:block;line-height:1;}
+.gsl{font-family:var(--font-m);font-size:9px;color:var(--txt-d);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;display:block;}
+
+/* ── HABITS ── */
+.mood-row{display:flex;gap:var(--f2);justify-content:space-between;margin-top:var(--f2);}
+.mbtn{flex:1;aspect-ratio:1;max-width:54px;border:1px solid var(--brd-val);border-radius:var(--r-sm);background:rgba(0,0,15,0.5);font-size:22px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+.mbtn.sel{border-color:var(--star-gold);background:var(--star-gold-p);transform:scale(1.12);box-shadow:0 0 20px rgba(255,215,0,0.2);}
+.hitem{display:flex;align-items:center;gap:var(--f3);background:rgba(0,0,15,0.5);border:1px solid var(--brd-val);border-radius:var(--r-sm);padding:var(--f2) var(--f3);cursor:pointer;transition:all .2s;margin-bottom:var(--f2);}
+.hitem.done{border-color:var(--teal);background:var(--teal-p);}
+.hck{width:26px;height:26px;border:2px solid var(--brd-val);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .2s;flex-shrink:0;}
+.hitem.done .hck{background:var(--teal);border-color:var(--teal);color:white;}
+.hbody{flex:1;}
+.hname{font-size:var(--fs-base);font-weight:500;}
+.hstr{font-family:var(--font-m);font-size:var(--fs-xs);color:var(--star-gold);}
+.hhist{display:flex;gap:4px;}
+.hd{width:8px;height:8px;border-radius:50%;background:var(--surf2);}
+.hd.done{background:var(--teal);}
+.whmap{display:flex;gap:6px;margin-top:var(--f2);}
+.whday{flex:1;text-align:center;}
+.whlbl{font-family:var(--font-m);font-size:9px;color:var(--txt-d);text-transform:uppercase;margin-bottom:4px;display:block;}
+.whcell{aspect-ratio:1;border-radius:var(--f1);background:var(--surf2);display:flex;align-items:center;justify-content:center;font-size:10px;}
+.whcell.done{background:var(--teal-p);color:var(--teal);border:1px solid rgba(56,201,176,.3);}
+.whcell.part{background:var(--acc-p);color:var(--acc);border:1px solid rgba(108,52,224,.3);}
+.whcell.today{border:1px solid var(--brd-val);}
+
+/* ── NOTES ── */
+.notesar{width:100%;background:rgba(0,0,15,0.5);border:1px solid var(--brd-val);border-radius:var(--r-sm);color:var(--txt);font-family:var(--font-b);font-size:var(--fs-sm);padding:var(--f2) var(--f3);min-height:100px;resize:vertical;outline:none;transition:border-color .2s;line-height:1.618;}
+.notesar:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(108,52,224,0.1);}
+.notesar::placeholder{color:var(--txt-d);}
+
+/* ── BOOKS ── */
+.bk-hero{background:linear-gradient(135deg,var(--violet-p),rgba(56,201,176,.07));border:1px solid var(--brd-val);border-radius:var(--r-md);padding:var(--f3);margin-bottom:var(--f3);}
+.bk-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--f2);margin-bottom:var(--f3);}
+.bk-sc{background:rgba(0,0,15,0.5);border:1px solid var(--brd-val);border-radius:var(--r-sm);padding:var(--f2);text-align:center;}
+.bk-sn{font-family:var(--font-d);font-size:var(--fs-md);color:var(--violet);display:block;line-height:1;}
+.bk-sl{font-family:var(--font-m);font-size:9px;color:var(--txt-d);text-transform:uppercase;letter-spacing:.1em;margin-top:4px;display:block;}
+.bk-card{background:rgba(0,0,15,0.5);border:1px solid var(--brd-val);border-radius:var(--r-md);padding:var(--f3);margin-bottom:var(--f2);position:relative;overflow:hidden;transition:all .3s;backdrop-filter:blur(8px);}
+.bk-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--violet),var(--teal));border-radius:0 0 0 var(--r-md);}
+.bk-card:hover{border-color:var(--violet);transform:translateY(-2px);box-shadow:0 8px 24px rgba(155,127,255,.15);}
+.bk-card.finished{border-color:var(--star-gold);}
+.bk-card.finished::before{background:linear-gradient(180deg,var(--star-gold),var(--teal));}
+.bk-card.reading::before{background:linear-gradient(180deg,var(--acc),var(--violet));}
+.bk-head{display:flex;gap:var(--f2);align-items:flex-start;margin-bottom:var(--f2);}
+.bk-thumb{width:44px;height:60px;border-radius:5px;background:linear-gradient(135deg,var(--violet-p),var(--acc-p));border:1px solid var(--brd-val);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.bk-info{flex:1;min-width:0;}
+.bk-title{font-size:var(--fs-base);font-weight:600;line-height:1.3;margin-bottom:3px;}
+.bk-author{font-family:var(--font-m);font-size:var(--fs-xs);color:var(--txt-d);letter-spacing:.06em;}
+.bk-status{font-family:var(--font-m);font-size:9px;padding:2px var(--f1);border-radius:50px;letter-spacing:.08em;text-transform:uppercase;display:inline-block;margin-top:5px;}
+.bk-status.reading{background:var(--acc-p);color:var(--acc);border:1px solid rgba(108,52,224,.3);}
+.bk-status.finished{background:var(--star-gold-p);color:var(--star-gold);border:1px solid rgba(255,215,0,.3);}
+.bk-status.want{background:var(--violet-p);color:var(--violet);border:1px solid rgba(155,127,255,.3);}
+.bk-progress-wrap{margin-bottom:var(--f2);}
+.bk-pg-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.bk-pg-info{font-family:var(--font-m);font-size:var(--fs-xs);color:var(--txt-m);}
+.bk-pg-pct{font-family:var(--font-d);font-size:var(--fs-md);color:var(--violet);line-height:1;}
+.bk-card.finished .bk-pg-pct{color:var(--star-gold);}
+.bk-ctrl{display:flex;gap:var(--f1);align-items:center;flex-wrap:wrap;}
+.bk-inp{background:var(--surf2);border:1px solid var(--brd-val);border-radius:var(--f1);color:var(--txt);font-family:var(--font-m);font-size:var(--fs-xs);padding:var(--f1) var(--f2);width:80px;text-align:center;outline:none;transition:border-color .2s;}
+.bk-inp:focus{border-color:var(--violet);}
+.bk-sess{background:var(--surf2);border:1px solid var(--brd-val);border-radius:var(--r-sm);padding:var(--f2);margin-top:var(--f2);}
+.bk-sess-title{font-family:var(--font-m);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--txt-d);margin-bottom:var(--f1);}
+.bk-sess-list{display:flex;flex-direction:column;gap:5px;max-height:100px;overflow-y:auto;}
+.bk-sess-item{display:flex;justify-content:space-between;font-size:var(--fs-xs);color:var(--txt-m);}
+.bk-sess-item span:last-child{font-family:var(--font-m);color:var(--violet);}
+.bk-note{font-size:var(--fs-xs);color:var(--txt-d);font-style:italic;margin-top:var(--f1);line-height:1.5;border-top:1px solid var(--brd-val);padding-top:var(--f1);}
+.bk-tabs{display:flex;gap:var(--f1);background:rgba(0,0,15,0.4);border-radius:var(--r-sm);padding:var(--f1);margin-bottom:var(--f3);}
+.bk-tab{flex:1;border:none;background:transparent;color:var(--txt-d);font-family:var(--font-m);font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:var(--f1);border-radius:8px;cursor:pointer;transition:all .2s;}
+.bk-tab.active{background:var(--violet);color:white;font-weight:700;}
+.bk-empty{text-align:center;padding:var(--f5) var(--f4);color:var(--txt-d);}
+.bk-empty .eico{font-size:44px;margin-bottom:var(--f3);display:block;}
+
+/* ── SETTINGS ── */
+.stitle{font-family:var(--font-d);font-size:var(--fs-md);margin-bottom:var(--f3);}
+.flbl{font-family:var(--font-m);font-size:var(--fs-xs);letter-spacing:.12em;color:var(--txt-d);text-transform:uppercase;display:block;margin-bottom:var(--f1);}
+.finp{width:100%;background:rgba(0,0,15,0.5);border:1px solid var(--brd-val);border-radius:var(--r-sm);color:var(--txt);font-family:var(--font-b);font-size:var(--fs-base);padding:var(--f2) var(--f3);outline:none;transition:border-color .2s,box-shadow .2s;}
+.finp:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(108,52,224,0.1);}
+body.theme-day .finp{background:rgba(230,240,255,0.8);}
+.frow{margin-bottom:var(--f3);}
+.togrow{display:flex;align-items:center;justify-content:space-between;gap:var(--f3);padding:var(--f2) 0;border-bottom:1px solid var(--brd-val);}
+.togi{flex:1;}
+.togn{font-size:var(--fs-base);font-weight:500;}
+.togd{font-size:var(--fs-xs);color:var(--txt-d);margin-top:2px;}
+.togsw{width:46px;height:26px;background:var(--surf2);border-radius:13px;border:1px solid var(--brd-val);cursor:pointer;position:relative;transition:background .2s,border-color .2s;flex-shrink:0;}
+.togsw.on{background:var(--acc);border-color:var(--acc);}
+.togsw::after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;background:white;border-radius:50%;transition:transform .2s;box-shadow:0 2px 4px rgba(0,0,0,.3);}
+.togsw.on::after{transform:translateX(20px);}
+.bdanger{background:var(--danger-p);border:1px solid var(--danger);color:var(--danger);border-radius:var(--r-sm);padding:var(--f2) var(--f3);font-family:var(--font-m);font-size:var(--fs-xs);letter-spacing:.1em;cursor:pointer;width:100%;transition:all .2s;margin-top:var(--f2);}
+.bdanger:hover{background:var(--danger);color:white;}
+
+/* ── MODAL ── */
+.mover{display:none;position:fixed;inset:0;background:rgba(0,0,10,.85);backdrop-filter:blur(12px);z-index:400;align-items:flex-end;justify-content:center;}
+.mover.open{display:flex;}
+.msheet{background:rgba(4,2,18,0.95);border:1px solid var(--brd-val);border-radius:var(--r-lg) var(--r-lg) 0 0;padding:var(--f3) var(--f4) calc(var(--f4) + var(--safe-b));width:100%;max-width:600px;max-height:92dvh;overflow-y:auto;animation:shup .32s cubic-bezier(.4,0,.2,1);backdrop-filter:blur(20px);}
+body.theme-day .msheet{background:rgba(220,235,255,0.97);}
+@keyframes shup{from{transform:translateY(100%);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.mhandle{width:38px;height:4px;background:var(--brd-val);border-radius:2px;margin:0 auto var(--f3);}
+.mtitle{font-family:var(--font-d);font-size:var(--fs-md);margin-bottom:var(--f3);}
+.mact{display:flex;gap:var(--f2);margin-top:var(--f4);}
+.bprim{flex:1;background:var(--acc);color:#fff;border:none;border-radius:var(--r-sm);padding:var(--f2) var(--f3);font-family:var(--font-m);font-size:var(--fs-sm);font-weight:700;letter-spacing:.1em;cursor:pointer;transition:all .2s;box-shadow:var(--shadow-g);}
+.bprim:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(108,52,224,0.4);}
+.bprim.violet{background:var(--violet);box-shadow:0 8px 32px rgba(155,127,255,.3);}
+.bcanc{background:var(--surf2);border:1px solid var(--brd-val);color:var(--txt-m);border-radius:var(--r-sm);padding:var(--f2) var(--f3);font-family:var(--font-m);font-size:var(--fs-sm);cursor:pointer;transition:all .2s;}
+.bcanc:hover{border-color:var(--acc);color:var(--acc);}
+.catsel{display:flex;gap:var(--f1);flex-wrap:wrap;margin-top:var(--f1);}
+.copt{padding:var(--f1) var(--f2);border:1px solid var(--brd-val);border-radius:var(--f2);font-family:var(--font-m);font-size:10px;letter-spacing:.08em;cursor:pointer;transition:all .2s;color:var(--txt-d);}
+.copt.active{background:var(--acc-p);border-color:var(--acc);color:var(--acc);}
+.mradio{display:flex;gap:var(--f1);flex-wrap:wrap;}
+.mrad{padding:var(--f1) var(--f2);border:1px solid var(--brd-val);border-radius:var(--f2);font-family:var(--font-m);font-size:10px;cursor:pointer;transition:all .2s;color:var(--txt-d);}
+.mrad.active{background:var(--violet-p);border-color:var(--violet);color:var(--violet);}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:calc(var(--nav-h) + var(--safe-b) + var(--f3));left:50%;transform:translateX(-50%) translateY(20px);background:rgba(4,2,18,0.9);border:1px solid var(--brd-val);border-radius:50px;backdrop-filter:blur(24px);padding:var(--f2) var(--f4);font-family:var(--font-m);font-size:var(--fs-xs);letter-spacing:.1em;color:var(--txt-m);z-index:500;opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;pointer-events:none;max-width:90vw;overflow:hidden;text-overflow:ellipsis;box-shadow:var(--shadow-g);}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+.sdiv{display:flex;align-items:center;gap:var(--f3);margin:var(--f4) 0 var(--f3);}
+.sdiv::before,.sdiv::after{content:'';flex:1;height:1px;background:var(--brd-val);}
+.sdiv span{font-family:var(--font-m);font-size:9px;color:var(--txt-d);text-transform:uppercase;letter-spacing:.15em;white-space:nowrap;}
+.rev{opacity:0;transform:translateY(var(--f4));transition:opacity .7s ease,transform .7s ease;}
+.rev.show{opacity:1;transform:translateY(0);}
+.empty{text-align:center;padding:var(--f6) var(--f4);color:var(--txt-d);}
+.eico{font-size:44px;margin-bottom:var(--f3);display:block;}
+.etxt{font-size:var(--fs-sm);line-height:1.8;}
+.mup-item{display:flex;align-items:center;gap:var(--f2);padding:var(--f1) var(--f2);border-bottom:1px solid var(--brd-val);}
+.mup-item:last-child{border-bottom:none;}
+.mup-dot{width:8px;height:8px;border-radius:50%;background:var(--acc);flex-shrink:0;}
+.mup-title{flex:1;font-size:var(--fs-sm);}
+.mup-time{font-family:var(--font-m);font-size:var(--fs-xs);color:var(--txt-d);}
+
+/* ── INSTALL BANNER ── */
+#install-banner{display:none;position:fixed;top:0;left:0;right:0;background:linear-gradient(135deg,var(--acc),var(--acc-l));color:#fff;padding:var(--f2) var(--f3);z-index:600;align-items:center;gap:var(--f2);font-family:var(--font-m);font-size:var(--fs-xs);letter-spacing:.1em;}
+#install-banner.visible{display:flex;}
+#install-banner button{background:#fff;color:var(--acc);border:none;border-radius:var(--f2);padding:5px var(--f2);font-family:var(--font-m);font-size:9px;cursor:pointer;font-weight:700;letter-spacing:.1em;margin-left:auto;flex-shrink:0;}
+#install-banner .close-ib{background:transparent;color:#fff;font-size:16px;padding:0 5px;}
+
+/* ── COMET CURSOR GLOW ── */
+#cg{
+  position:fixed;width:200px;height:200px;
+  background:radial-gradient(ellipse 60% 100% at 50% 30%,rgba(108,52,224,0.12) 0%,rgba(108,52,224,0.04) 40%,transparent 80%);
+  border-radius:50%;pointer-events:none;
+  transform:translate(-50%,-50%) rotate(-45deg);
+  z-index:0;transition:opacity .3s;display:none;
+}
+@media(hover:hover){#cg{display:block;}}
+
+/* ══════════════════════════════
+   EMAIL LOGIN / AUTH SYSTEM
+══════════════════════════════ */
+#auth-screen{
+  position:fixed;inset:0;z-index:1000;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg);
+  padding:var(--f3);
+}
+.auth-box{
+  width:100%;max-width:400px;
+  background:rgba(4,2,18,0.9);
+  border:1px solid var(--brd-val);
+  border-radius:var(--r-lg);
+  padding:var(--f5) var(--f4);
+  backdrop-filter:blur(20px);
+  box-shadow:var(--shadow-g);
+  animation:authIn .5s cubic-bezier(.4,0,.2,1);
+}
+body.theme-day .auth-box{background:rgba(220,235,255,0.95);}
+@keyframes authIn{from{opacity:0;transform:translateY(30px) scale(.96);}to{opacity:1;transform:translateY(0) scale(1);}}
+.auth-logo{text-align:center;margin-bottom:var(--f4);}
+.auth-logo-icon{font-size:48px;display:block;margin-bottom:var(--f2);animation:float 4s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.auth-title{font-family:var(--font-d);font-size:var(--fs-lg);text-align:center;background:linear-gradient(135deg,var(--acc-l),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px;}
+.auth-sub{font-family:var(--font-m);font-size:var(--fs-xs);color:var(--txt-d);text-align:center;letter-spacing:.1em;margin-bottom:var(--f4);}
+.auth-tabs{display:flex;background:var(--surf2);border-radius:var(--r-sm);padding:3px;margin-bottom:var(--f4);}
+.auth-tab{flex:1;border:none;background:transparent;color:var(--txt-d);font-family:var(--font-m);font-size:var(--fs-xs);padding:var(--f1);border-radius:8px;cursor:pointer;transition:all .2s;}
+.auth-tab.active{background:var(--acc);color:#fff;}
+.auth-err{background:var(--danger-p);border:1px solid var(--danger);border-radius:var(--r-sm);padding:var(--f2) var(--f3);font-family:var(--font-m);font-size:var(--fs-xs);color:var(--danger);margin-bottom:var(--f3);display:none;}
+.auth-err.show{display:block;}
+.auth-info{background:var(--teal-p);border:1px solid var(--teal);border-radius:var(--r-sm);padding:var(--f2) var(--f3);font-family:var(--font-m);font-size:var(--fs-xs);color:var(--teal);margin-bottom:var(--f3);display:none;}
+.auth-info.show{display:block;}
+.auth-loading{display:flex;align-items:center;justify-content:center;gap:var(--f2);padding:var(--f2);display:none;}
+.auth-loading.show{display:flex;}
+.auth-spinner{width:18px;height:18px;border:2px solid var(--brd-val);border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.auth-footer{text-align:center;margin-top:var(--f3);font-family:var(--font-m);font-size:9px;color:var(--txt-d);letter-spacing:.1em;}
+
+/* Cloud sync indicator */
+.sync-badge{
+  display:flex;align-items:center;gap:5px;
+  font-family:var(--font-m);font-size:9px;letter-spacing:.1em;
+  color:var(--txt-d);padding:4px var(--f2);
+  background:var(--surf2);border:1px solid var(--brd-val);
+  border-radius:50px;cursor:pointer;transition:all .2s;
+}
+.sync-badge:hover{border-color:var(--acc);color:var(--acc);}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0;}
+.sync-dot.syncing{background:var(--acc);animation:pulse 1s infinite;}
+.sync-dot.offline{background:var(--danger);}
+
+/* User info in settings */
+.user-card{background:linear-gradient(135deg,var(--acc-p),var(--violet-p));border:1px solid var(--brd-val);border-radius:var(--r-md);padding:var(--f3);margin-bottom:var(--f4);display:flex;align-items:center;gap:var(--f3);}
+.user-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--violet));display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:var(--fs-md);color:#fff;flex-shrink:0;}
+.user-info{flex:1;min-width:0;}
+.user-email{font-family:var(--font-m);font-size:var(--fs-xs);color:var(--txt-d);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.user-name-disp{font-weight:600;font-size:var(--fs-base);}
+.btn-logout{background:var(--danger-p);border:1px solid var(--danger);color:var(--danger);border-radius:var(--r-sm);padding:var(--f1) var(--f3);font-family:var(--font-m);font-size:var(--fs-xs);cursor:pointer;transition:all .2s;flex-shrink:0;}
+.btn-logout:hover{background:var(--danger);color:#fff;}
+
+@media(max-width:480px){.view{padding:var(--f4) var(--f3) var(--f5);}.sgrid{gap:var(--f1);}.gstats{gap:var(--f1);}.bk-stats{gap:var(--f1);}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════
+     AUTH SCREEN
+════════════════════════════════ -->
+<div id="auth-screen">
+  <div class="auth-box">
+    <div class="auth-logo">
+      <span class="auth-logo-icon">🚀</span>
+      <div class="auth-title">KPI TRACKER</div>
+      <div class="auth-sub">PERSONAL GROWTH SYSTEM</div>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">লগইন</button>
+      <button class="auth-tab" id="tab-signup" onclick="switchAuthTab('signup')">নতুন অ্যাকাউন্ট</button>
+    </div>
+    <div class="auth-err" id="auth-err"></div>
+    <div class="auth-info" id="auth-info"></div>
+    <div class="auth-loading" id="auth-loading">
+      <div class="auth-spinner"></div>
+      <span style="font-family:var(--font-m);font-size:var(--fs-xs);color:var(--txt-d);">প্রসেস করা হচ্ছে...</span>
+    </div>
+
+    <!-- Login Form -->
+    <div id="form-login">
+      <div class="frow"><label class="flbl" for="l-email">ইমেইল</label><input class="finp" id="l-email" type="email" placeholder="your@email.com" autocomplete="email"></div>
+      <div class="frow"><label class="flbl" for="l-pass">পাসওয়ার্ড</label><input class="finp" id="l-pass" type="password" placeholder="••••••••" autocomplete="current-password"></div>
+      <button class="bprim" style="width:100%;" onclick="doLogin()">🔐 লগইন করুন</button>
+      <div style="text-align:center;margin-top:var(--f2);">
+        <button style="background:transparent;border:none;color:var(--txt-d);font-family:var(--font-m);font-size:var(--fs-xs);cursor:pointer;letter-spacing:.08em;" onclick="showForgot()">পাসওয়ার্ড ভুলে গেছেন?</button>
+      </div>
+    </div>
+
+    <!-- Signup Form -->
+    <div id="form-signup" style="display:none;">
+      <div class="frow"><label class="flbl" for="s-sname">আপনার নাম</label><input class="finp" id="s-sname" type="text" placeholder="Sirat" autocomplete="name"></div>
+      <div class="frow"><label class="flbl" for="s-email">ইমেইল</label><input class="finp" id="s-email" type="email" placeholder="your@email.com" autocomplete="email"></div>
+      <div class="frow"><label class="flbl" for="s-pass">পাসওয়ার্ড (কমপক্ষে ৬ অক্ষর)</label><input class="finp" id="s-pass" type="password" placeholder="••••••••" autocomplete="new-password"></div>
+      <div class="frow"><label class="flbl" for="s-pass2">পাসওয়ার্ড নিশ্চিত করুন</label><input class="finp" id="s-pass2" type="password" placeholder="••••••••" autocomplete="new-password"></div>
+      <button class="bprim" style="width:100%;" onclick="doSignup()">🌟 অ্যাকাউন্ট তৈরি করুন</button>
+    </div>
+
+    <!-- Forgot Form -->
+    <div id="form-forgot" style="display:none;">
+      <div style="font-family:var(--font-m);font-size:var(--fs-xs);color:var(--txt-m);margin-bottom:var(--f3);">আপনার ইমেইলে পাসওয়ার্ড রিসেট লিংক পাঠানো হবে।</div>
+      <div class="frow"><label class="flbl" for="f-email">ইমেইল</label><input class="finp" id="f-email" type="email" placeholder="your@email.com"></div>
+      <div style="display:flex;gap:var(--f2);">
+        <button class="bcanc" onclick="showForgotBack()">← ফিরুন</button>
+        <button class="bprim" onclick="doReset()">রিসেট ইমেইল পাঠান</button>
+      </div>
+    </div>
+
+    <div class="auth-footer">আপনার ডেটা এনক্রিপ্টেড ও সুরক্ষিত 🔒</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════
+     MAIN APP
+════════════════════════ -->
+<div id="spb" aria-hidden="true"></div>
+<div id="cg" aria-hidden="true"></div>
+<div id="install-banner" role="banner">
+  <span>🚀</span><span>হোম স্ক্রিনে যোগ করুন — অফলাইনেও চলবে</span>
+  <button id="install-btn">Install</button>
+  <button class="close-ib" id="close-ib">✕</button>
+</div>
+<div class="tbar" aria-label="থিম">
+  <button class="tbtn" data-theme="dawn" aria-label="Dawn">🌅</button>
+  <button class="tbtn" data-theme="day" aria-label="Day">☀️</button>
+  <button class="tbtn" data-theme="sunset" aria-label="Sunset">🌇</button>
+  <button class="tbtn" data-theme="night" aria-label="Night">🌙</button>
+  <span class="tbadge" id="tbadge">AUTO</span>
+</div>
+
+<div id="app" style="display:none;">
+
+<!-- DASHBOARD -->
+<div id="view-dashboard" class="view active">
+  <div class="dash-hd rev">
+    <div class="dash-date" id="dash-date"></div>
+    <div class="dash-greet td" id="dash-greet"></div>
+    <div class="dash-tag" id="dash-tag"></div>
+    <div style="margin-top:var(--f2);display:flex;align-items:center;gap:var(--f2);">
+      <div class="sync-badge" id="sync-badge" onclick="forcSync()" title="ক্লাউড সিঙ্ক">
+        <div class="sync-dot" id="sync-dot"></div>
+        <span id="sync-lbl">সিঙ্ক</span>
+      </div>
+    </div>
+  </div>
+  <div class="now-card rev" id="now-card">
+    <div class="now-lbl"><span class="ndot"></span> এখন চলছে</div>
+    <div class="now-title" id="now-title">কোনো টাস্ক নেই</div>
+    <div class="now-sub" id="now-sub"></div>
+  </div>
+  <div class="sgrid rev">
+    <div class="sc"><span class="snum t-acc" id="s-done">0</span><span class="slbl">সম্পন্ন</span></div>
+    <div class="sc"><span class="snum t-acc" id="s-total">0</span><span class="slbl">মোট টাস্ক</span></div>
+    <div class="sc"><span class="snum t-teal" id="s-streak">0</span><span class="slbl">সেরা স্ট্রিক</span></div>
+    <div class="sc"><span class="snum t-gold" id="s-pages">0</span><span class="slbl">আজ পড়া পাতা</span></div>
+  </div>
+  <div class="trem rev">
+    <div class="fb mb2">
+      <div>
+        <div style="font-family:var(--font-m);font-size:9px;letter-spacing:.16em;color:var(--txt-d);text-transform:uppercase;" id="wklbl">ওঠা 06:00</div>
+        <div class="td" style="font-size:var(--fs-md);color:var(--acc);" id="trem-disp">—</div>
+        <div style="font-family:var(--font-m);font-size:var(--fs-xs);color:var(--txt-d);" id="trem-lbl">লোড হচ্ছে...</div>
+      </div>
+      <svg width="56" height="56" viewBox="0 0 72 72">
+        <circle cx="36" cy="36" r="32" fill="none" stroke="var(--surf2)" stroke-width="5"/>
+        <circle id="day-ring" cx="36" cy="36" r="32" fill="none" stroke="var(--acc)" stroke-width="5" stroke-linecap="round" stroke-dasharray="201.1" stroke-dashoffset="201.1" transform="rotate(-90 36 36)" style="transition:stroke-dashoffset .8s"/>
+      </svg>
+    </div>
+    <div style="font-family:var(--font-m);font-size:9px;color:var(--txt-d);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;" id="sklbl">ঘুম 23:00</div>
+    <div class="ptr"><div class="pfl" id="day-bar" style="width:0%"></div></div>
+  </div>
+  <div class="rev mb3">
+    <div class="eyebrow">বই পড়া</div>
+    <div id="dash-books"></div>
+  </div>
+  <div class="rev">
+    <div class="eyebrow">আসন্ন টাস্ক</div>
+    <div id="dash-upcoming"></div>
+  </div>
+</div>
+
+<!-- TODAY -->
+<div id="view-today" class="view">
+  <div class="vh rev">
+    <div>
+      <div class="eyebrow">দৈনিক পরিকল্পনা</div>
+      <div class="vtitle td">আজকের <span class="t-acc">টাস্ক</span></div>
+    </div>
+    <button class="btn-add" onclick="openTaskModal()">+ টাস্ক</button>
+  </div>
+  <div class="rev card mb3" style="padding:var(--f2) var(--f3);">
+    <div class="fb">
+      <div class="td" style="font-size:var(--fs-md);" id="today-clock">--:--</div>
+      <div style="font-family:var(--font-m);font-size:var(--fs-xs);color:var(--txt-m);" id="today-pct-lbl">0% সম্পন্ন</div>
+    </div>
+    <div class="ptr mt2"><div class="pfl" id="today-pct-bar" style="width:0%"></div></div>
+    <div style="font-family:var(--font-m);font-size:9px;color:var(--txt-d);margin-top:6px;" id="today-remain"></div>
+  </div>
+  <div class="tlist rev" id="task-list"></div>
+</div>
+
+<!-- GOALS -->
+<div id="view-goals" class="view">
+  <div class="vh rev">
+    <div>
+      <div class="eyebrow">লক্ষ্য নির্ধারণ</div>
+      <div class="vtitle td">আমার <span class="t-acc">লক্ষ্য</span></div>
+    </div>
+    <button class="btn-add" onclick="openGoalModal()">+ লক্ষ্য</button>
+  </div>
+  <div class="ptabs rev" role="tablist">
+    <button class="ptab active" data-p="weekly" onclick="switchPeriod('weekly')">সাপ্তাহিক</button>
+    <button class="ptab" data-p="monthly" onclick="switchPeriod('monthly')">মাসিক</button>
+    <button class="ptab" data-p="yearly" onclick="switchPeriod('yearly')">বার্ষিক</button>
+  </div>
+  <div id="goals-wrap" class="rev"></div>
+</div>
+
+<!-- BOOKS -->
+<div id="view-books" class="view">
+  <div class="vh rev">
+    <div>
+      <div class="eyebrow">পড়ার তালিকা</div>
+      <div class="vtitle td">আমার <span class="t-violet">বই</span></div>
+    </div>
+    <button class="btn-add" style="background:var(--violet);" onclick="openBookModal()">+ বই</button>
+  </div>
+  <div class="bk-stats rev">
+    <div class="bk-sc"><span class="bk-sn" id="bks-total">0</span><span class="bk-sl">মোট বই</span></div>
+    <div class="bk-sc"><span class="bk-sn" id="bks-done">0</span><span class="bk-sl">শেষ করা</span></div>
+    <div class="bk-sc"><span class="bk-sn" id="bks-pages">0</span><span class="bk-sl">পাতা পড়া</span></div>
+  </div>
+  <div class="bk-tabs rev" role="tablist">
+    <button class="bk-tab active" data-bt="reading" onclick="switchBkTab('reading')">পড়ছি</button>
+    <button class="bk-tab" data-bt="want" onclick="switchBkTab('want')">পড়ব</button>
+    <button class="bk-tab" data-bt="finished" onclick="switchBkTab('finished')">শেষ</button>
+    <button class="bk-tab" data-bt="all" onclick="switchBkTab('all')">সব</button>
+  </div>
+  <div id="books-wrap" class="rev"></div>
+</div>
+
+<!-- GROWTH -->
+<div id="view-growth" class="view">
+  <div class="rev" style="padding-top:var(--f5);">
+    <div class="eyebrow">ব্যক্তিগত উন্নয়ন</div>
+    <div class="td" style="font-size:clamp(34px,10vw,55px);line-height:1;margin-bottom:var(--f4);">গ্রোথ <span class="t-acc">ট্র্যাকার</span></div>
+    <div class="gstats">
+      <div class="gsc"><span class="gsn" id="gs-h">0</span><span class="gsl">অভ্যাস</span></div>
+      <div class="gsc"><span class="gsn" id="gs-s">0</span><span class="gsl">সেরা স্ট্রিক</span></div>
+      <div class="gsc"><span class="gsn" id="gs-d">0</span><span class="gsl">আজ ✓</span></div>
+    </div>
+  </div>
+  <div class="rev">
+    <div class="eyebrow">আজকের মনোবল</div>
+    <div class="mood-row" id="mood-row">
+      <button class="mbtn" data-mood="1">😔</button>
+      <button class="mbtn" data-mood="2">😐</button>
+      <button class="mbtn" data-mood="3">🙂</button>
+      <button class="mbtn" data-mood="4">😊</button>
+      <button class="mbtn" data-mood="5">🔥</button>
+    </div>
+  </div>
+  <div class="rev mt3">
+    <div class="fb mb3">
+      <div class="eyebrow" style="margin-bottom:0;">দৈনিক অভ্যাস</div>
+      <button class="bsm" onclick="openHabitModal()">+ অভ্যাস যোগ</button>
+    </div>
+    <div id="hlist"></div>
+  </div>
+  <div class="rev" id="hmap-wrap">
+    <div class="sdiv"><span>এই সপ্তাহ</span></div>
+    <div class="whmap" id="whmap"></div>
+  </div>
+  <div class="rev mt3">
+    <div class="eyebrow">আজকের অভিমত</div>
+    <textarea class="notesar" id="refnotes" placeholder="আজকের দিনটি কেমন গেল? কী শিখলেন?&#10;بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ" oninput="saveRef()"></textarea>
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div id="view-settings" class="view">
+  <div class="rev" style="padding-top:var(--f5);">
+    <div class="eyebrow">কনফিগারেশন</div>
+    <div class="td" style="font-size:clamp(34px,10vw,55px);line-height:1;margin-bottom:var(--f4);">সেটিংস</div>
+  </div>
+  <!-- User Account Card -->
+  <div class="rev user-card" id="user-card">
+    <div class="user-avatar" id="user-avatar">?</div>
+    <div class="user-info">
+      <div class="user-name-disp" id="user-name-disp">—</div>
+      <div class="user-email" id="user-email-disp">—</div>
+      <div style="font-family:var(--font-m);font-size:9px;color:var(--teal);margin-top:4px;">☁️ ক্লাউড সিঙ্ক সক্রিয়</div>
+    </div>
+    <button class="btn-logout" onclick="doLogout()">লগআউট</button>
+  </div>
+  <div class="rev mb4">
+    <div class="stitle">ব্যক্তিগত তথ্য</div>
+    <div class="frow"><label class="flbl" for="s-name">আপনার নাম</label><input class="finp" id="s-name" type="text" placeholder="নাম" oninput="saveSets()"></div>
+    <div class="frow"><label class="flbl" for="s-wake">ওঠার সময়</label><input class="finp" id="s-wake" type="time" value="06:00" oninput="saveSets()"></div>
+    <div class="frow"><label class="flbl" for="s-sleep">ঘুমানোর সময়</label><input class="finp" id="s-sleep" type="time" value="23:00" oninput="saveSets()"></div>
+  </div>
+  <div class="rev mb4">
+    <div class="stitle">নোটিফিকেশন</div>
+    <div class="togrow"><div class="togi"><div class="togn">নোটিফিকেশন চালু</div><div class="togd">রিমাইন্ডার ও অনুস্মারক</div></div><div class="togsw" id="notif-tog" onclick="toggleNotif()"></div></div>
+    <div class="frow mt2"><label class="flbl" for="s-mn">সকালের রিমাইন্ডার</label><input class="finp" id="s-mn" type="time" value="07:00" oninput="saveSets()"></div>
+    <div class="frow"><label class="flbl" for="s-en">সন্ধ্যার রিভিউ</label><input class="finp" id="s-en" type="time" value="20:00" oninput="saveSets()"></div>
+  </div>
+  <div class="rev mb4">
+    <div class="stitle">থিম</div>
+    <div class="togrow"><div class="togi"><div class="togn">সার্কাডিয়ান অটো থিম</div><div class="togd">সময় অনুযায়ী স্বয়ংক্রিয়</div></div><div class="togsw on" id="circ-tog" onclick="toggleCircadian()"></div></div>
+  </div>
+  <div class="rev mb4">
+    <div class="stitle">ডেটা ও ব্যাকআপ</div>
+    <div class="togrow" style="margin-bottom:var(--f2);">
+      <div class="togi"><div class="togn">ক্লাউড সিঙ্ক</div><div class="togd">সব ডিভাইসে সিঙ্ক্রোনাইজ</div></div>
+      <div class="sync-badge" onclick="forcSync()"><div class="sync-dot" id="sync-dot2"></div><span id="sync-lbl2">সিঙ্ক</span></div>
+    </div>
+    <button class="bdanger" onclick="confirmReset()">সব ডেটা মুছে ফেলুন</button>
+  </div>
+  <div class="rev" style="text-align:center;padding:var(--f4) 0 var(--f5);">
+    <div class="td grad" style="font-size:var(--fs-md);">KPI TRACKER</div>
+    <div style="font-family:var(--font-m);font-size:9px;color:var(--txt-d);letter-spacing:.18em;margin-top:var(--f1);">DEEP SPACE EDITION v3.0</div>
+    <div style="font-size:var(--fs-xs);color:var(--txt-d);margin-top:var(--f2);">Sirat — Rangpur, Bangladesh 🇧🇩</div>
+  </div>
+</div>
+
+</div><!-- #app -->
+
+<nav class="bnav" id="main-nav" style="display:none;" aria-label="নেভিগেশন">
+  <button class="nbtn active" data-v="dashboard" onclick="sv('dashboard')"><div class="nicon">🏠</div><span class="nlabel">হোম</span></button>
+  <button class="nbtn" data-v="today" onclick="sv('today')"><div class="nicon">✅</div><span class="nlabel">টাস্ক</span></button>
+  <button class="nbtn" data-v="goals" onclick="sv('goals')"><div class="nicon">🎯</div><span class="nlabel">গোল</span></button>
+  <button class="nbtn" data-v="books" onclick="sv('books')"><div class="nicon">📚</div><span class="nlabel">বই</span></button>
+  <button class="nbtn" data-v="growth" onclick="sv('growth')"><div class="nicon">🌱</div><span class="nlabel">গ্রোথ</span></button>
+</nav>
+
+<!-- Task Modal -->
+<div class="mover" id="m-task">
+  <div class="msheet"><div class="mhandle"></div>
+    <div class="mtitle td">নতুন <span class="t-acc">টাস্ক</span></div>
+    <div class="frow"><label class="flbl" for="t-title">টাস্কের নাম *</label><input class="finp" id="t-title" type="text" placeholder="যেমন: Chapter 5 পড়া..."></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--f2);">
+      <div class="frow"><label class="flbl" for="t-start">শুরু</label><input class="finp" id="t-start" type="time"></div>
+      <div class="frow"><label class="flbl" for="t-end">শেষ</label><input class="finp" id="t-end" type="time"></div>
+    </div>
+    <div class="frow"><span class="flbl">ক্যাটাগরি</span>
+      <div class="catsel" id="catsel">
+        <div class="copt active" data-c="পড়াশোনা">📚 পড়াশোনা</div>
+        <div class="copt" data-c="ব্যবসা">💼 ব্যবসা</div>
+        <div class="copt" data-c="ব্যায়াম">🏃 ব্যায়াম</div>
+        <div class="copt" data-c="পরিবার">👨‍👩‍👧 পরিবার</div>
+        <div class="copt" data-c="ইবাদত">🕌 ইবাদত</div>
+        <div class="copt" data-c="অন্যান্য">📌 অন্যান্য</div>
+      </div>
+    </div>
+    <div class="frow"><label class="flbl" for="t-note">নোট</label><input class="finp" id="t-note" type="text" placeholder="বিস্তারিত..."></div>
+    <div class="mact"><button class="bcanc" onclick="closeModal('m-task')">বাতিল</button><button class="bprim" onclick="submitTask()">যোগ করুন</button></div>
+  </div>
+</div>
+
+<!-- Goal Modal -->
+<div class="mover" id="m-goal">
+  <div class="msheet"><div class="mhandle"></div>
+    <div class="mtitle td">নতুন <span class="t-acc" id="gmp-lbl">লক্ষ্য</span></div>
+    <div class="frow"><label class="flbl" for="g-title">শিরোনাম *</label><input class="finp" id="g-title" type="text" placeholder="যেমন: ৫টি অর্ডার, Chapter 3 শেষ..."></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--f2);">
+      <div class="frow"><label class="flbl" for="g-target">টার্গেট *</label><input class="finp" id="g-target" type="number" min="1" placeholder="100"></div>
+      <div class="frow"><label class="flbl" for="g-unit">একক</label><input class="finp" id="g-unit" type="text" placeholder="টি / পাতা / ৳"></div>
+    </div>
+    <div class="mact"><button class="bcanc" onclick="closeModal('m-goal')">বাতিল</button><button class="bprim" onclick="submitGoal()">যোগ করুন</button></div>
+  </div>
+</div>
+
+<!-- Habit Modal -->
+<div class="mover" id="m-habit">
+  <div class="msheet"><div class="mhandle"></div>
+    <div class="mtitle td">নতুন <span class="t-acc">অভ্যাস</span></div>
+    <div class="frow"><label class="flbl" for="h-name">অভ্যাসের নাম *</label><input class="finp" id="h-name" type="text" placeholder="যেমন: ফজর নামাজ, ৩০মি পড়া..."></div>
+    <div class="frow"><label class="flbl" for="h-icon">আইকন (ইমোজি)</label><input class="finp" id="h-icon" type="text" placeholder="🕌 📚 🏃 💧"></div>
+    <div class="mact"><button class="bcanc" onclick="closeModal('m-habit')">বাতিল</button><button class="bprim" onclick="submitHabit()">যোগ করুন</button></div>
+  </div>
+</div>
+
+<!-- Book Modal -->
+<div class="mover" id="m-book">
+  <div class="msheet"><div class="mhandle"></div>
+    <div class="mtitle td" id="bm-title">নতুন <span class="t-violet">বই</span> যোগ</div>
+    <input type="hidden" id="bm-edit-id">
+    <div class="frow"><label class="flbl" for="b-title">বইয়ের নাম *</label><input class="finp" id="b-title" type="text" placeholder="যেমন: Atomic Habits..."></div>
+    <div class="frow"><label class="flbl" for="b-author">লেখক</label><input class="finp" id="b-author" type="text" placeholder="লেখকের নাম"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--f2);">
+      <div class="frow"><label class="flbl" for="b-total">মোট পাতা *</label><input class="finp" id="b-total" type="number" min="1" placeholder="300"></div>
+      <div class="frow"><label class="flbl" for="b-cur">পড়া হয়েছে</label><input class="finp" id="b-cur" type="number" min="0" placeholder="0" value="0"></div>
+    </div>
+    <div class="frow"><span class="flbl">অবস্থা</span>
+      <div class="mradio" id="bk-status-sel">
+        <div class="mrad active" data-s="reading">📖 পড়ছি</div>
+        <div class="mrad" data-s="want">📋 পড়ব</div>
+        <div class="mrad" data-s="finished">✅ শেষ</div>
+      </div>
+    </div>
+    <div class="frow"><label class="flbl" for="b-target">দৈনিক পাতার লক্ষ্য</label><input class="finp" id="b-target" type="number" min="1" placeholder="২০" value="20"></div>
+    <div class="frow"><label class="flbl" for="b-icon">আইকন / কভার ইমোজি</label><input class="finp" id="b-icon" type="text" placeholder="📗 📕 📘" value="📗"></div>
+    <div class="frow"><label class="flbl" for="b-note">নোট / মন্তব্য</label><input class="finp" id="b-note" type="text" placeholder="বই সম্পর্কে নোট..."></div>
+    <div class="mact"><button class="bcanc" onclick="closeModal('m-book')">বাতিল</button><button class="bprim violet" onclick="submitBook()">যোগ করুন</button></div>
+  </div>
+</div>
+
+<!-- Reading Session Modal -->
+<div class="mover" id="m-session">
+  <div class="msheet"><div class="mhandle"></div>
+    <div class="mtitle td">📖 পড়ার <span class="t-violet">সেশন</span> রেকর্ড</div>
+    <input type="hidden" id="sess-book-id">
+    <div style="background:var(--violet-p);border:1px solid var(--brd-val);border-radius:var(--r-sm);padding:var(--f2) var(--f3);margin-bottom:var(--f3);">
+      <div style="font-family:var(--font-d);font-size:var(--fs-md);" id="sess-book-name"></div>
+      <div style="font-family:var(--font-m);font-size:var(--fs-xs);color:var(--txt-d);margin-top:4px;" id="sess-book-prog"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--f2);">
+      <div class="frow"><label class="flbl" for="sess-from">শুরু পাতা</label><input class="finp" id="sess-from" type="number" min="1" placeholder="45"></div>
+      <div class="frow"><label class="flbl" for="sess-to">শেষ পাতা *</label><input class="finp" id="sess-to" type="number" min="1" placeholder="65"></div>
+    </div>
+    <div class="frow"><label class="flbl" for="sess-note">মন্তব্য</label><input class="finp" id="sess-note" type="text" placeholder="আজ কী পড়লাম..."></div>
+    <div class="mact"><button class="bcanc" onclick="closeModal('m-session')">বাতিল</button><button class="bprim violet" onclick="submitSession()">সেশন সেভ করুন</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+<script>
+'use strict';
+// ══════════════════════════════════════════════
+//  KPI TRACKER — DEEP SPACE EDITION
+//  Email Auth + Cloud Sync via Anthropic API
+// ══════════════════════════════════════════════
+
+const SK='kpi_v4';
+const CLOUD_KEY='kpi_cloud_user';
+const DAYS=['রবি','সোম','মঙ্গল','বুধ','বৃহ','শুক্র','শনি'];
+const MONTHS=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
+
+// ── AUTH STATE ──────────────────────────────
+let currentUser = null; // {email, name, token, id}
+let syncTimer = null;
+let lastSyncTime = 0;
+
+let DB={
+  daily:{},weekly:{},monthly:{},yearly:{},
+  habits:[],growth:{},books:[],
+  sets:{name:'Sirat',wakeTime:'06:00',sleepTime:'23:00',notifEnabled:false,morningT:'07:00',eveningT:'20:00',circAuto:true,manualTheme:null}
+};
+let curView='dashboard',curPeriod='weekly',curCat='পড়াশোনা',curBkStatus='reading',curBkTab='reading';
+let ciIv=null,deferredPrompt=null;
+
+const pad=n=>String(n).padStart(2,'0');
+function tstr(){const d=new Date();return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;}
+function wstr(){const d=new Date(),j=new Date(d.getFullYear(),0,1),w=Math.ceil(((d-j)/86400000+j.getDay()+1)/7);return `${d.getFullYear()}-W${pad(w)}`;}
+function mstr(){const d=new Date();return `${d.getFullYear()}-${pad(d.getMonth()+1)}`;}
+function ystr(){return String(new Date().getFullYear());}
+function t2m(t){if(!t)return 0;const[h,m]=t.split(':').map(Number);return h*60+m;}
+function m2t(m){return `${pad(Math.floor(m/60))}:${pad(m%60)}`;}
+function nowM(){const n=new Date();return n.getHours()*60+n.getMinutes();}
+function fmt12(t){if(!t)return '';const[h,m]=t.split(':').map(Number);return `${h%12||12}:${pad(m)} ${h>=12?'PM':'AM'}`;}
+function fmtDur(mins){const h=Math.floor(mins/60),m=mins%60;if(h&&m)return `${h}ঘ ${m}মি`;return h?`${h} ঘণ্টা`:`${m} মিনিট`;}
+function dateKey(d){return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;}
+
+// ══════════════════════════════════════════════
+//  SIMPLE EMAIL AUTH SYSTEM
+//  (Uses localStorage for user DB + per-user data)
+// ══════════════════════════════════════════════
+
+function hashPassword(pass){
+  // Simple hash using djb2 (for client-only security)
+  let hash=5381;
+  for(let i=0;i<pass.length;i++){hash=((hash<<5)+hash)+pass.charCodeAt(i);hash=hash&hash;}
+  return (hash>>>0).toString(16);
+}
+
+function getUsersDB(){
+  try{return JSON.parse(localStorage.getItem('kpi_users')||'{}');}catch(e){return {};}
+}
+function saveUsersDB(db){localStorage.setItem('kpi_users',JSON.stringify(db));}
+function getUserDataKey(email){return `kpi_data_${btoa(email).replace(/=/g,'')}`;}
+
+function loadUserData(email){
+  try{
+    const raw=localStorage.getItem(getUserDataKey(email));
+    if(raw){const p=JSON.parse(raw);return p;}
+  }catch(e){}
+  return null;
+}
+function saveUserData(email,data){
+  try{localStorage.setItem(getUserDataKey(email),JSON.stringify(data));}catch(e){}
+}
+
+// ── AUTH UI ──────────────────────────────────
+let authMode='login';
+
+function switchAuthTab(tab){
+  authMode=tab;
+  document.getElementById('tab-login').classList.toggle('active',tab==='login');
+  document.getElementById('tab-signup').classList.toggle('active',tab==='signup');
+  document.getElementById('form-login').style.display=tab==='login'?'block':'none';
+  document.getElementById('form-signup').style.display=tab==='signup'?'block':'none';
+  document.getElementById('form-forgot').style.display='none';
+  clearAuthMessages();
+}
+
+function showForgot(){
+  document.getElementById('form-login').style.display='none';
+  document.getElementById('form-forgot').style.display='block';
+  clearAuthMessages();
+}
+function showForgotBack(){
+  document.getElementById('form-forgot').style.display='none';
+  document.getElementById('form-login').style.display='block';
+}
+function clearAuthMessages(){
+  document.getElementById('auth-err').classList.remove('show');
+  document.getElementById('auth-info').classList.remove('show');
+}
+function showAuthErr(msg){
+  const e=document.getElementById('auth-err');e.textContent=msg;e.classList.add('show');
+  document.getElementById('auth-info').classList.remove('show');
+}
+function showAuthInfo(msg){
+  const e=document.getElementById('auth-info');e.textContent=msg;e.classList.add('show');
+  document.getElementById('auth-err').classList.remove('show');
+}
+function setAuthLoading(v){document.getElementById('auth-loading').classList.toggle('show',v);}
+
+function doLogin(){
+  const email=document.getElementById('l-email').value.trim().toLowerCase();
+  const pass=document.getElementById('l-pass').value;
+  clearAuthMessages();
+  if(!email||!pass){showAuthErr('ইমেইল ও পাসওয়ার্ড দিন');return;}
+  if(!/^[^@]+@[^@]+\.[^@]+$/.test(email)){showAuthErr('সঠিক ইমেইল দিন');return;}
+  setAuthLoading(true);
+  setTimeout(()=>{
+    const users=getUsersDB();
+    if(!users[email]){setAuthLoading(false);showAuthErr('এই ইমেইলে কোনো অ্যাকাউন্ট নেই। নতুন অ্যাকাউন্ট তৈরি করুন।');return;}
+    if(users[email].passHash!==hashPassword(pass)){setAuthLoading(false);showAuthErr('পাসওয়ার্ড ভুল হয়েছে');return;}
+    setAuthLoading(false);
+    loginSuccess({email,name:users[email].name,id:users[email].id});
+  },400);
+}
+
+function doSignup(){
+  const name=document.getElementById('s-sname').value.trim();
+  const email=document.getElementById('s-email').value.trim().toLowerCase();
+  const pass=document.getElementById('s-pass').value;
+  const pass2=document.getElementById('s-pass2').value;
+  clearAuthMessages();
+  if(!name){showAuthErr('আপনার নাম দিন');return;}
+  if(!email||!/^[^@]+@[^@]+\.[^@]+$/.test(email)){showAuthErr('সঠিক ইমেইল দিন');return;}
+  if(pass.length<6){showAuthErr('পাসওয়ার্ড কমপক্ষে ৬ অক্ষর হতে হবে');return;}
+  if(pass!==pass2){showAuthErr('পাসওয়ার্ড মিলছে না');return;}
+  setAuthLoading(true);
+  setTimeout(()=>{
+    const users=getUsersDB();
+    if(users[email]){setAuthLoading(false);showAuthErr('এই ইমেইল দিয়ে আগেই অ্যাকাউন্ট আছে। লগইন করুন।');return;}
+    const id='u_'+Date.now().toString(36);
+    users[email]={name,passHash:hashPassword(pass),id,createdAt:new Date().toISOString()};
+    saveUsersDB(users);
+    setAuthLoading(false);
+    loginSuccess({email,name,id});
+  },400);
+}
+
+function doReset(){
+  const email=document.getElementById('f-email').value.trim().toLowerCase();
+  clearAuthMessages();
+  if(!email){showAuthErr('ইমেইল দিন');return;}
+  const users=getUsersDB();
+  if(!users[email]){showAuthErr('এই ইমেইলে কোনো অ্যাকাউন্ট নেই');return;}
+  // In a real app this would send email; here we show the stored password info
+  showAuthInfo('✓ পাসওয়ার্ড রিসেট সিমুলেট করা হয়েছে। বাস্তবে এখানে একটি ইমেইল পাঠানো হতো।\n\nডেভ মোড: নতুন পাসওয়ার্ড সেট করতে নিচের কনসোলে resetPassword("'+email+'","নতুন পাসওয়ার্ড") চালান।');
+}
+
+window.resetPassword=function(email,newPass){
+  const users=getUsersDB();
+  if(!users[email]){console.log('User not found');return;}
+  users[email].passHash=hashPassword(newPass);
+  saveUsersDB(users);
+  console.log('Password updated for',email);
+};
+
+function loginSuccess(user){
+  currentUser=user;
+  localStorage.setItem(CLOUD_KEY,JSON.stringify(user));
+  // Load user's data
+  const savedData=loadUserData(user.email);
+  if(savedData){
+    DB={...DB,...savedData};
+    if(savedData.sets)DB.sets={...DB.sets,...savedData.sets};
+    DB.daily=savedData.daily||{};
+    DB.weekly=savedData.weekly||{};
+    DB.monthly=savedData.monthly||{};
+    DB.yearly=savedData.yearly||{};
+    DB.habits=savedData.habits||[];
+    DB.growth=savedData.growth||{};
+    DB.books=savedData.books||[];
+  }
+  // Update name from auth if settings empty
+  if(!DB.sets.name||DB.sets.name==='Sirat')DB.sets.name=user.name;
+  // Hide auth, show app
+  document.getElementById('auth-screen').style.display='none';
+  document.getElementById('app').style.display='block';
+  document.getElementById('main-nav').style.display='flex';
+  initApp();
+  updateSyncUI(true);
+  toast(`স্বাগতম, ${user.name}! 🚀`);
+  // Auto-save sample data for first-time users
+  if(!DB.books.length&&!DB.habits.length){
+    addSampleData();
+  }
+}
+
+function doLogout(){
+  if(!confirm('লগআউট করবেন?'))return;
+  save(); // save before logout
+  currentUser=null;
+  localStorage.removeItem(CLOUD_KEY);
+  DB={daily:{},weekly:{},monthly:{},yearly:{},habits:[],growth:{},books:[],sets:{name:'Sirat',wakeTime:'06:00',sleepTime:'23:00',notifEnabled:false,morningT:'07:00',eveningT:'20:00',circAuto:true,manualTheme:null}};
+  document.getElementById('app').style.display='none';
+  document.getElementById('main-nav').style.display='none';
+  document.getElementById('auth-screen').style.display='flex';
+  // Reset auth form
+  switchAuthTab('login');
+  document.getElementById('l-email').value='';
+  document.getElementById('l-pass').value='';
+}
+
+// ── SYNC UI ──────────────────────────────────
+function updateSyncUI(synced){
+  const d1=document.getElementById('sync-dot');
+  const l1=document.getElementById('sync-lbl');
+  const d2=document.getElementById('sync-dot2');
+  const l2=document.getElementById('sync-lbl2');
+  if(synced){
+    [d1,d2].forEach(d=>{if(d){d.className='sync-dot';d.style.background='var(--teal)';}});
+    const t=new Date().toLocaleTimeString('bn-BD',{hour:'2-digit',minute:'2-digit'});
+    [l1,l2].forEach(l=>{if(l)l.textContent=t+' সিঙ্ক';});
+  }else{
+    [d1,d2].forEach(d=>{if(d){d.className='sync-dot syncing';}});
+    [l1,l2].forEach(l=>{if(l)l.textContent='সিঙ্ক হচ্ছে...';});
+  }
+}
+
+function forcSync(){
+  if(!currentUser)return;
+  updateSyncUI(false);
+  setTimeout(()=>{save();updateSyncUI(true);toast('ডেটা সিঙ্ক হয়েছে ✓');},600);
+}
+
+// ── STORAGE ──────────────────────────────────
+function loadDB(){
+  try{
+    const raw=localStorage.getItem(SK);
+    if(raw){const p=JSON.parse(raw);DB={...DB,...p};DB.sets={...DB.sets,...(p.sets||{})};DB.daily=p.daily||{};DB.weekly=p.weekly||{};DB.monthly=p.monthly||{};DB.yearly=p.yearly||{};DB.habits=p.habits||[];DB.growth=p.growth||{};DB.books=p.books||{};}
+  }catch(e){}
+}
+function save(){
+  try{
+    localStorage.setItem(SK,JSON.stringify(DB));
+    // Also save to user-specific key
+    if(currentUser){saveUserData(currentUser.email,DB);}
+    // Debounced sync indicator
+    clearTimeout(syncTimer);
+    updateSyncUI(false);
+    syncTimer=setTimeout(()=>updateSyncUI(true),800);
+  }catch(e){}
+}
+
+function getTD(){if(!DB.daily[tstr()])DB.daily[tstr()]={tasks:[],mood:null,reflection:''};return DB.daily[tstr()];}
+function getGoals(p){const k=p==='weekly'?wstr():p==='monthly'?mstr():ystr();if(!DB[p][k])DB[p][k]={goals:[]};return DB[p][k].goals;}
+
+// ── THEME ──────────────────────────────────
+function circTheme(){const h=new Date().getHours();if(h>=5&&h<8)return'dawn';if(h>=8&&h<17)return'day';if(h>=17&&h<20)return'sunset';return'night';}
+function applyTheme(t,manual=false){
+  document.body.className=`theme-${t}`;
+  if(manual){DB.sets.manualTheme=t;DB.sets.circAuto=false;document.getElementById('tbadge').textContent='MANUAL';const ct=document.getElementById('circ-tog');if(ct)ct.classList.remove('on');}
+  else{document.getElementById('tbadge').textContent='AUTO';}
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.toggle('active',b.dataset.theme===t));
+  const mc={dawn:'#0a041c',day:'#e6f0ff',sunset:'#08021a',night:'#00000f'};
+  document.getElementById('theme-meta').setAttribute('content',mc[t]||'#00000f');
+  save();
+}
+function setupCircadian(){
+  if(ciIv)clearInterval(ciIv);
+  if(DB.sets.circAuto){applyTheme(circTheme());ciIv=setInterval(()=>{if(DB.sets.circAuto)applyTheme(circTheme());},60000);}
+  else if(DB.sets.manualTheme)applyTheme(DB.sets.manualTheme,true);
+  else applyTheme('night');
+}
+function toggleCircadian(){
+  DB.sets.circAuto=!DB.sets.circAuto;
+  const el=document.getElementById('circ-tog');el.classList.toggle('on',DB.sets.circAuto);
+  if(DB.sets.circAuto){applyTheme(circTheme());document.getElementById('tbadge').textContent='AUTO';}
+  save();toast(DB.sets.circAuto?'অটো থিম চালু':'অটো থিম বন্ধ');
+}
+
+// ── NAV ──────────────────────────────────────
+function sv(v){
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.getElementById(`view-${v}`).classList.add('active');
+  document.querySelectorAll('.nbtn').forEach(b=>b.classList.toggle('active',b.dataset.v===v));
+  curView=v;
+  ({dashboard:renderDash,today:renderToday,goals:renderGoals,books:renderBooks,growth:renderGrowth,settings:renderSets}[v]||function(){})();
+  setTimeout(revealView,60);
+}
+
+// ── CLOCK ──────────────────────────────────
+function startClock(){tick();setInterval(tick,30000);}
+function tick(){
+  const n=new Date(),ts=`${pad(n.getHours())}:${pad(n.getMinutes())}`;
+  const cl=document.getElementById('today-clock');if(cl)cl.textContent=ts;
+  updateNowCard();updateTimeRem();updateTodayPct();
+  if(curView==='today')hlTask();
+}
+
+// ── DASHBOARD ────────────────────────────────
+function renderDash(){
+  const n=new Date(),h=n.getHours(),nm=DB.sets.name||currentUser?.name||'Sirat';
+  const de=document.getElementById('dash-date');if(de)de.textContent=`${DAYS[n.getDay()]}, ${n.getDate()} ${MONTHS[n.getMonth()]} ${n.getFullYear()}`;
+  let gr='আস-সালামু আলাইকুম',tg='';
+  if(h>=5&&h<8){gr='ফজরের পর শুভ সকাল';tg='নতুন দিন শুরু হোক বিসমিল্লাহ দিয়ে';}
+  else if(h>=8&&h<12){gr='সুপ্রভাত';tg='আজকের দিনটি উৎপাদনশীল করুন';}
+  else if(h>=12&&h<17){gr='শুভ বিকেল';tg='দিনের মাঝে এসে গেছেন, চালিয়ে যান!';}
+  else if(h>=17&&h<20){gr='শুভ সন্ধ্যা';tg='বাকি কাজগুলো শেষ করার সময়';}
+  else{gr='শুভ রাত্রি';tg='কালকের পরিকল্পনা করুন, ভালো ঘুমান';}
+  const ge=document.getElementById('dash-greet');if(ge)ge.innerHTML=`${gr}, <span class="t-acc">${nm}</span>`;
+  const te2=document.getElementById('dash-tag');if(te2)te2.textContent=tg;
+  const td=getTD(),done=td.tasks.filter(t=>t.done).length;
+  animN('s-done',done);animN('s-total',td.tasks.length);
+  const bs=DB.habits.reduce((mx,h2)=>Math.max(mx,calcStreak(h2)),0);
+  animN('s-streak',bs);
+  const todayPg=DB.books.reduce((s,b)=>{
+    const sess=(b.sessions||[]).filter(s=>s.date===tstr());
+    return s+sess.reduce((a,s)=>a+(s.to-s.from),0);
+  },0);
+  animN('s-pages',todayPg);
+  updateNowCard();updateTimeRem();renderDashBooks();renderDashUpcoming();
+}
+
+function renderDashUpcoming(){
+  const el=document.getElementById('dash-upcoming');if(!el)return;
+  const td=getTD(),nm=nowM();
+  const upcoming=td.tasks.filter(t=>!t.done&&t2m(t.startTime)>nm).sort((a,b)=>t2m(a.startTime)-t2m(b.startTime)).slice(0,3);
+  if(!upcoming.length){el.innerHTML='<div style="color:var(--txt-d);font-size:var(--fs-sm);padding:var(--f2) 0;">আজকের বাকি কোনো টাস্ক নেই</div>';return;}
+  el.innerHTML=upcoming.map(t=>`<div class="mup-item"><div class="mup-dot"></div><div class="mup-title">${t.title}</div><div class="mup-time">${fmt12(t.startTime)}</div></div>`).join('');
+}
+
+function updateNowCard(){
+  const td=getTD(),nm=nowM();
+  const cur=td.tasks.find(t=>t2m(t.startTime)<=nm&&nm<t2m(t.endTime)&&!t.done);
+  const nxt=[...td.tasks].filter(t=>!t.done&&t2m(t.startTime)>nm).sort((a,b)=>t2m(a.startTime)-t2m(b.startTime))[0];
+  const te=document.getElementById('now-title'),se=document.getElementById('now-sub');
+  if(cur){if(te)te.textContent=cur.title;const rem=t2m(cur.endTime)-nm;if(se)se.textContent=`${fmt12(cur.startTime)} – ${fmt12(cur.endTime)} • ${fmtDur(rem)} বাকি`;}
+  else if(nxt){if(te)te.textContent=`পরবর্তী: ${nxt.title}`;const wait=t2m(nxt.startTime)-nm;if(se)se.textContent=`${fmt12(nxt.startTime)} শুরু • ${fmtDur(wait)} পরে`;}
+  else{if(te)te.textContent='কোনো টাস্ক নেই';if(se)se.textContent='Today ট্যাবে নতুন টাস্ক যোগ করুন →';}
+}
+function updateTimeRem(){
+  const nm=nowM(),sl=t2m(DB.sets.sleepTime),wk=t2m(DB.sets.wakeTime);
+  const rem=sl-nm,total=sl-wk,el2=nm-wk;
+  const pct=Math.max(0,Math.min(100,(el2/total)*100));
+  const de=document.getElementById('trem-disp'),le=document.getElementById('trem-lbl');
+  if(rem>0){if(de)de.textContent=fmtDur(rem);if(le)le.textContent=`ঘুমানোর (${DB.sets.sleepTime}) আগে বাকি`;}
+  else{if(de)de.textContent='বিশ্রামের সময়';if(le)le.textContent='ভালো ঘুমান!';}
+  const be=document.getElementById('day-bar');if(be)be.style.width=pct+'%';
+  const re=document.getElementById('day-ring');if(re){const c=201.1;re.style.strokeDashoffset=c-(pct/100)*c;}
+  const wl=document.getElementById('wklbl');if(wl)wl.textContent=`ওঠা ${DB.sets.wakeTime}`;
+  const sl2=document.getElementById('sklbl');if(sl2)sl2.textContent=`ঘুম ${DB.sets.sleepTime}`;
+}
+function renderDashBooks(){
+  const el=document.getElementById('dash-books');if(!el)return;
+  const reading=DB.books.filter(b=>b.status==='reading');
+  if(!reading.length){el.innerHTML='<div style="color:var(--txt-d);font-size:var(--fs-sm);padding:var(--f2) 0;">বই ট্যাবে পড়ার বই যোগ করুন 📚</div>';return;}
+  el.innerHTML=reading.slice(0,2).map(b=>{
+    const pct=Math.min(100,Math.round((b.currentPage/b.totalPages)*100));
+    const daily=b.dailyTarget||20;
+    const todayRead=(b.sessions||[]).filter(s=>s.date===tstr()).reduce((a,s)=>a+(s.to-s.from),0);
+    const rem=b.totalPages-b.currentPage;
+    return `<div class="card mb2" onclick="sv('books')" style="cursor:pointer;animation-delay:${Math.random()*3}s">
+      <div style="display:flex;gap:var(--f2);align-items:center;margin-bottom:var(--f2);">
+        <div style="font-size:28px;flex-shrink:0;">${b.icon||'📗'}</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:600;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${b.title}</div>
+          <div style="font-family:var(--font-m);font-size:9px;color:var(--txt-d);">${todayRead}/${daily} পাতা আজ</div>
+        </div>
+        <div style="font-family:var(--font-d);font-size:var(--fs-md);color:var(--violet);">${pct}%</div>
+      </div>
+      <div class="ptr"><div class="pfl violet" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+}
+
+// ── TODAY ────────────────────────────────────
+function renderToday(){
+  const td=getTD(),nm=nowM();
+  const el=document.getElementById('task-list');if(!el)return;
+  if(!td.tasks.length){el.innerHTML=`<div class="empty"><span class="eico">🎯</span><div class="etxt">আজকের কোনো টাস্ক নেই<br>"+ টাস্ক" বাটনে ট্যাপ করুন</div></div>`;return;}
+  const sorted=[...td.tasks].sort((a,b)=>t2m(a.startTime)-t2m(b.startTime));
+  el.innerHTML=sorted.map(t=>{
+    const isNow=t2m(t.startTime)<=nm&&nm<t2m(t.endTime)&&!t.done;
+    return `<div class="titem ${t.done?'done':''} ${isNow?'now-hi':''}" id="ti-${t.id}" onclick="togTask('${t.id}')">
+      <div class="tcheck">${t.done?'✓':isNow?'▶':''}</div>
+      <div class="tbody"><div class="ttitle">${t.title}</div><div class="ttime">${fmt12(t.startTime)} – ${fmt12(t.endTime)}${t.note?' • '+t.note:''}</div></div>
+      <div class="tcat">${t.category||''}</div>
+      <button class="tdel" onclick="delTask(event,'${t.id}')">✕</button>
+    </div>`;
+  }).join('');
+  updateTodayPct();
+}
+function updateTodayPct(){
+  const td=getTD(),done=td.tasks.filter(t=>t.done).length,total=td.tasks.length;
+  const pct=total?Math.round((done/total)*100):0;
+  const pe=document.getElementById('today-pct-lbl');if(pe)pe.textContent=`${pct}% সম্পন্ন`;
+  const pb=document.getElementById('today-pct-bar');if(pb){pb.style.width=pct+'%';pb.className='pfl'+(pct>=100?' full':'');}
+  const nm=nowM();
+  const remMins=td.tasks.filter(t=>!t.done&&t2m(t.endTime)>nm).reduce((s,t)=>s+Math.max(0,t2m(t.endTime)-Math.max(nm,t2m(t.startTime))),0);
+  const re=document.getElementById('today-remain');if(re)re.textContent=remMins>0?`বাকি কাজের জন্য: ${fmtDur(remMins)}`:'';
+}
+function hlTask(){
+  const td=getTD(),nm=nowM();
+  td.tasks.forEach(t=>{const el=document.getElementById(`ti-${t.id}`);if(!el)return;const now=t2m(t.startTime)<=nm&&nm<t2m(t.endTime)&&!t.done;el.classList.toggle('now-hi',now);const ck=el.querySelector('.tcheck');if(ck&&!t.done)ck.textContent=now?'▶':'';});
+}
+function togTask(id){const td=getTD(),t=td.tasks.find(x=>x.id===id);if(!t)return;t.done=!t.done;save();renderToday();updateTodayPct();if(curView==='dashboard')renderDash();toast(t.done?`✓ "${t.title}" সম্পন্ন!`:`"${t.title}" পুনরায় খোলা হলো`);}
+function delTask(e,id){e.stopPropagation();const td=getTD();td.tasks=td.tasks.filter(t=>t.id!==id);save();renderToday();if(curView==='dashboard')renderDash();toast('টাস্ক মুছে ফেলা হয়েছে');}
+function openTaskModal(){
+  const n=new Date(),h=n.getHours(),m=Math.ceil(n.getMinutes()/15)*15;
+  const sm=h*60+(m>=60?0:m),em=sm+60;
+  document.getElementById('t-start').value=m2t(sm%1440);
+  document.getElementById('t-end').value=m2t(em%1440);
+  document.getElementById('t-title').value='';document.getElementById('t-note').value='';
+  document.getElementById('m-task').classList.add('open');
+  setTimeout(()=>document.getElementById('t-title').focus(),400);
+}
+function submitTask(){
+  const title=document.getElementById('t-title').value.trim();
+  const start=document.getElementById('t-start').value;
+  const end=document.getElementById('t-end').value;
+  const note=document.getElementById('t-note').value.trim();
+  if(!title){toast('টাস্কের নাম দিন');return;}
+  if(!start||!end){toast('সময় নির্বাচন করুন');return;}
+  getTD().tasks.push({id:Date.now().toString(36),title,startTime:start,endTime:end,category:curCat,note,done:false});
+  save();closeModal('m-task');renderToday();if(curView==='dashboard')renderDash();
+  toast(`"${title}" যোগ হয়েছে ✓`);
+}
+
+// ── GOALS ────────────────────────────────────
+function switchPeriod(p){
+  curPeriod=p;
+  document.querySelectorAll('.ptab').forEach(t=>t.classList.toggle('active',t.dataset.p===p));
+  renderGoals();
+}
+function renderGoals(){
+  const goals=getGoals(curPeriod),el=document.getElementById('goals-wrap');if(!el)return;
+  const pl={weekly:'এই সপ্তাহ',monthly:'এই মাস',yearly:'এই বছর'}[curPeriod];
+  if(!goals.length){el.innerHTML=`<div class="empty"><span class="eico">🎯</span><div class="etxt">${pl}-এর লক্ষ্য নেই<br>"+ যোগ করুন" ট্যাপ করুন</div></div>`;return;}
+  el.innerHTML=goals.map((g,i)=>{
+    const pct=Math.min(100,Math.round((g.current/g.target)*100)),done=pct>=100;
+    return `<div class="gitm ${done?'done':''}" style="animation-delay:${i*.08}s">
+      <div class="ghd"><div class="gtitle">${g.title}</div><div class="gpct">${pct}%</div></div>
+      <div class="ptr"><div class="pfl ${done?'full':''}" style="width:${pct}%"></div></div>
+      <div class="gmeta"><span>${g.current} / ${g.target} ${g.unit||''}</span><span>${done?'🌟 সম্পন্ন!':g.target-g.current+' '+(g.unit||'')+' বাকি'}</span></div>
+      <div class="gctrl">
+        <input type="number" class="gnum" id="gi-${g.id}" value="${g.current}" min="0">
+        <button class="bsm" onclick="updGoal('${g.id}')">আপডেট</button>
+        <button class="bsm d" onclick="delGoal('${g.id}')">মুছুন</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function updGoal(id){const goals=getGoals(curPeriod),g=goals.find(x=>x.id===id);if(!g)return;g.current=Number(document.getElementById(`gi-${id}`).value);save();renderGoals();if(curView==='dashboard')renderDash();toast(g.current>=g.target?'🌟 লক্ষ্য পূরণ!':'আপডেট হয়েছে ✓');}
+function delGoal(id){const k=curPeriod==='weekly'?wstr():curPeriod==='monthly'?mstr():ystr();DB[curPeriod][k].goals=DB[curPeriod][k].goals.filter(g=>g.id!==id);save();renderGoals();toast('লক্ষ্য মুছে ফেলা হয়েছে');}
+function openGoalModal(){
+  const lbl={weekly:'সাপ্তাহিক',monthly:'মাসিক',yearly:'বার্ষিক'}[curPeriod];
+  const e=document.getElementById('gmp-lbl');if(e)e.textContent=lbl+' লক্ষ্য';
+  document.getElementById('g-title').value='';document.getElementById('g-target').value='';document.getElementById('g-unit').value='';
+  document.getElementById('m-goal').classList.add('open');
+  setTimeout(()=>document.getElementById('g-title').focus(),400);
+}
+function submitGoal(){
+  const t=document.getElementById('g-title').value.trim(),tg=Number(document.getElementById('g-target').value),u=document.getElementById('g-unit').value.trim();
+  if(!t){toast('শিরোনাম দিন');return;}if(!tg||tg<=0){toast('বৈধ টার্গেট দিন');return;}
+  getGoals(curPeriod).push({id:Date.now().toString(36),title:t,target:tg,current:0,unit:u});
+  save();closeModal('m-goal');renderGoals();toast(`"${t}" লক্ষ্য যোগ ✓`);
+}
+
+// ── BOOKS ────────────────────────────────────
+function switchBkTab(t){curBkTab=t;document.querySelectorAll('.bk-tab').forEach(b=>b.classList.toggle('active',b.dataset.bt===t));renderBooksList();}
+function renderBooks(){
+  const total=DB.books.length,done2=DB.books.filter(b=>b.status==='finished').length,pages=DB.books.reduce((s,b)=>s+b.currentPage,0);
+  const e1=document.getElementById('bks-total');if(e1)animN('bks-total',total);
+  const e2=document.getElementById('bks-done');if(e2)animN('bks-done',done2);
+  const e3=document.getElementById('bks-pages');if(e3)animN('bks-pages',pages);
+  renderBooksList();
+}
+function getBkList(){if(curBkTab==='all')return DB.books;return DB.books.filter(b=>b.status===curBkTab);}
+function renderBooksList(){
+  const el=document.getElementById('books-wrap');if(!el)return;
+  const list=getBkList();
+  if(!list.length){const labels={reading:'চলতি পঠন তালিকায়',want:'পঠন পরিকল্পনায়',finished:'সম্পন্ন বইয়ের তালিকায়',all:'বই তালিকায়'};el.innerHTML=`<div class="bk-empty"><span class="eico">📚</span><div class="etxt">কোনো বই ${labels[curBkTab]} নেই<br>"+ বই যোগ" বাটনে ট্যাপ করুন</div></div>`;return;}
+  el.innerHTML=list.map(b=>bkCard(b)).join('');
+}
+function bkCard(b){
+  const pct=b.totalPages>0?Math.min(100,Math.round((b.currentPage/b.totalPages)*100)):0;
+  const rem=b.totalPages-b.currentPage,daily=b.dailyTarget||20;
+  const estDays=daily>0&&rem>0?Math.ceil(rem/daily):0;
+  const allSess=b.sessions||[],todaySess=allSess.filter(s=>s.date===tstr());
+  const todayRead=todaySess.reduce((a,s)=>a+(s.to-s.from),0),totalRead=allSess.reduce((a,s)=>a+(s.to-s.from),0);
+  const last3=allSess.slice(-3).reverse();
+  const statusLabel={reading:'পড়ছি',want:'পড়ব',finished:'শেষ'};
+  return `<div class="bk-card ${b.status}" id="bkc-${b.id}">
+    <div class="bk-head">
+      <div class="bk-thumb">${b.icon||'📗'}</div>
+      <div class="bk-info">
+        <div class="bk-title">${b.title}</div>
+        <div class="bk-author">${b.author||'লেখক অজানা'}</div>
+        <span class="bk-status ${b.status}">${statusLabel[b.status]||b.status}</span>
+      </div>
+    </div>
+    <div class="bk-progress-wrap">
+      <div class="bk-pg-row">
+        <div>
+          <div class="bk-pg-info"><b>${b.currentPage}</b> / ${b.totalPages} পাতা পড়া</div>
+          <div style="font-family:var(--font-m);font-size:9px;color:var(--txt-d);margin-top:3px;">বাকি ${rem} পাতা${estDays>0?' • আনুমানিক '+estDays+' দিন':''}</div>
+        </div>
+        <div class="bk-pg-pct">${pct}%</div>
+      </div>
+      <div class="ptr"><div class="pfl ${b.status==='finished'?'full':'violet'}" style="width:${pct}%"></div></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:var(--f2);">
+      <div style="background:var(--surf2);border-radius:var(--r-sm);padding:var(--f1) var(--f2);text-align:center;flex:1;margin-right:var(--f1);">
+        <div style="font-family:var(--font-d);font-size:var(--fs-md);color:var(--violet);">${todayRead}</div>
+        <div style="font-family:var(--font-m);font-size:9px;color:var(--txt-d);">আজ পড়া</div>
+        <div style="font-family:var(--font-m);font-size:9px;color:${todayRead>=daily?'var(--teal)':'var(--acc)'};">লক্ষ্য: ${daily}</div>
+      </div>
+      <div style="background:var(--surf2);border-radius:var(--r-sm);padding:var(--f1) var(--f2);text-align:center;flex:1;margin-right:var(--f1);">
+        <div style="font-family:var(--font-d);font-size:var(--fs-md);color:var(--teal);">${allSess.length}</div>
+        <div style="font-family:var(--font-m);font-size:9px;color:var(--txt-d);">সেশন</div>
+        <div style="font-family:var(--font-m);font-size:9px;color:var(--txt-d);">${totalRead} পাতা</div>
+      </div>
+      <div style="background:var(--surf2);border-radius:var(--r-sm);padding:var(--f1) var(--f2);text-align:center;flex:1;">
+        <div style="font-family:var(--font-d);font-size:var(--fs-md);color:var(--acc);">${estDays||'—'}</div>
+        <div style="font-family:var(--font-m);font-size:9px;color:var(--txt-d);">আনুমানিক</div>
+        <div style="font-family:var(--font-m);font-size:9px;color:var(--txt-d);">দিন বাকি</div>
+      </div>
+    </div>
+    ${last3.length?`<div class="bk-sess"><div class="bk-sess-title">সাম্প্রতিক সেশন</div><div class="bk-sess-list">${last3.map(s=>`<div class="bk-sess-item"><span>${s.date} • পাতা ${s.from}–${s.to}${s.note?' — '+s.note:''}</span><span>+${s.to-s.from} পাতা</span></div>`).join('')}</div></div>`:''}
+    ${b.note?`<div class="bk-note">📝 ${b.note}</div>`:''}
+    <div class="bk-ctrl mt2">
+      ${b.status!=='finished'?`<button class="bsm" style="background:var(--violet-p);border-color:var(--violet);color:var(--violet);" onclick="openSessionModal('${b.id}')">📖 সেশন যোগ</button>`:''}
+      <button class="bsm" onclick="quickUpdatePages('${b.id}')">✏️ পাতা আপডেট</button>
+      <button class="bsm" onclick="editBook('${b.id}')">সম্পাদনা</button>
+      <button class="bsm d" onclick="deleteBook('${b.id}')">মুছুন</button>
+    </div>
+  </div>`;
+}
+function quickUpdatePages(id){
+  const b=DB.books.find(x=>x.id===id);if(!b)return;
+  const pg=prompt(`"${b.title}"\nবর্তমানে ${b.currentPage} পাতা পড়া হয়েছে।\nকত পাতা পর্যন্ত পড়েছেন?`);
+  if(pg===null)return;const n=parseInt(pg);
+  if(isNaN(n)||n<0){toast('বৈধ সংখ্যা দিন');return;}
+  b.currentPage=Math.min(n,b.totalPages);
+  if(b.currentPage>=b.totalPages)b.status='finished';
+  save();renderBooks();renderDashBooks();toast(b.currentPage>=b.totalPages?`🌟 "${b.title}" সম্পন্ন!`:`${b.currentPage} পাতা আপডেট ✓`);
+}
+function openSessionModal(id){
+  const b=DB.books.find(x=>x.id===id);if(!b)return;
+  document.getElementById('sess-book-id').value=id;
+  document.getElementById('sess-book-name').textContent=b.title;
+  document.getElementById('sess-book-prog').textContent=`${b.currentPage}/${b.totalPages} পাতা পড়া (${Math.round(b.currentPage/b.totalPages*100)}%)`;
+  document.getElementById('sess-from').value=b.currentPage>0?b.currentPage:'';
+  document.getElementById('sess-to').value='';document.getElementById('sess-note').value='';
+  document.getElementById('m-session').classList.add('open');
+  setTimeout(()=>document.getElementById('sess-to').focus(),400);
+}
+function submitSession(){
+  const id=document.getElementById('sess-book-id').value,b=DB.books.find(x=>x.id===id);if(!b)return;
+  const from=parseInt(document.getElementById('sess-from').value)||b.currentPage,to=parseInt(document.getElementById('sess-to').value),note=document.getElementById('sess-note').value.trim();
+  if(!to||to<=from){toast('শেষ পাতা সঠিকভাবে দিন');return;}
+  if(to>b.totalPages){toast(`মোট পাতা ${b.totalPages}, তার বেশি দেওয়া যাবে না`);return;}
+  if(!b.sessions)b.sessions=[];
+  const pagesRead=to-from;
+  b.sessions.push({id:Date.now().toString(36),date:tstr(),from,to,note,ts:Date.now()});
+  b.currentPage=Math.max(b.currentPage,to);
+  if(b.currentPage>=b.totalPages){b.status='finished';b.currentPage=b.totalPages;}
+  save();closeModal('m-session');renderBooks();renderDashBooks();renderDash();
+  toast(b.status==='finished'?`🌟 "${b.title}" সম্পন্ন! অভিনন্দন!`:`+${pagesRead} পাতা পড়া হয়েছে ✓`);
+}
+function openBookModal(){
+  document.getElementById('bm-edit-id').value='';
+  document.getElementById('bm-title').innerHTML='নতুন <span class="t-violet">বই</span> যোগ';
+  document.getElementById('b-title').value='';document.getElementById('b-author').value='';
+  document.getElementById('b-total').value='';document.getElementById('b-cur').value='0';
+  document.getElementById('b-target').value='20';document.getElementById('b-icon').value='📗';document.getElementById('b-note').value='';
+  curBkStatus='reading';document.querySelectorAll('.mrad').forEach(r=>r.classList.toggle('active',r.dataset.s==='reading'));
+  document.getElementById('m-book').classList.add('open');
+  setTimeout(()=>document.getElementById('b-title').focus(),400);
+}
+function editBook(id){
+  const b=DB.books.find(x=>x.id===id);if(!b)return;
+  document.getElementById('bm-edit-id').value=id;
+  document.getElementById('bm-title').innerHTML=`বই <span class="t-violet">সম্পাদনা</span>`;
+  document.getElementById('b-title').value=b.title;document.getElementById('b-author').value=b.author||'';
+  document.getElementById('b-total').value=b.totalPages;document.getElementById('b-cur').value=b.currentPage;
+  document.getElementById('b-target').value=b.dailyTarget||20;document.getElementById('b-icon').value=b.icon||'📗';document.getElementById('b-note').value=b.note||'';
+  curBkStatus=b.status;document.querySelectorAll('.mrad').forEach(r=>r.classList.toggle('active',r.dataset.s===b.status));
+  document.getElementById('m-book').classList.add('open');
+}
+function submitBook(){
+  const title=document.getElementById('b-title').value.trim(),author=document.getElementById('b-author').value.trim();
+  const total=parseInt(document.getElementById('b-total').value),cur=parseInt(document.getElementById('b-cur').value)||0;
+  const daily=parseInt(document.getElementById('b-target').value)||20,icon=document.getElementById('b-icon').value.trim()||'📗';
+  const note=document.getElementById('b-note').value.trim(),editId=document.getElementById('bm-edit-id').value;
+  if(!title){toast('বইয়ের নাম দিন');return;}if(!total||total<=0){toast('মোট পাতা দিন');return;}
+  if(editId){const b=DB.books.find(x=>x.id===editId);if(b){Object.assign(b,{title,author,totalPages:total,currentPage:Math.min(cur,total),dailyTarget:daily,icon,note,status:curBkStatus});if(b.currentPage>=b.totalPages)b.status='finished';}}
+  else{DB.books.push({id:Date.now().toString(36),title,author,totalPages:total,currentPage:Math.min(cur,total),dailyTarget:daily,icon,note,status:curBkStatus,sessions:[],addedDate:tstr()});}
+  save();closeModal('m-book');renderBooks();renderDashBooks();toast(editId?`"${title}" আপডেট ✓`:`"${title}" যোগ হয়েছে 📚`);
+}
+function deleteBook(id){
+  const b=DB.books.find(x=>x.id===id);if(!b)return;
+  if(!confirm(`"${b.title}" মুছে ফেলবেন?`))return;
+  DB.books=DB.books.filter(x=>x.id!==id);save();renderBooks();renderDashBooks();toast('বই মুছে ফেলা হয়েছে');
+}
+
+// ── GROWTH ───────────────────────────────────
+function renderGrowth(){
+  const bs=DB.habits.reduce((mx,h)=>Math.max(mx,calcStreak(h)),0);
+  const doneT=DB.habits.filter(h=>isHDone(h.id)).length;
+  const e1=document.getElementById('gs-h');if(e1)e1.textContent=DB.habits.length;
+  const e2=document.getElementById('gs-s');if(e2)e2.textContent=bs;
+  const e3=document.getElementById('gs-d');if(e3)e3.textContent=doneT;
+  renderMood();renderHabits();renderWhmap();loadRef();
+}
+function renderHabits(){
+  const el=document.getElementById('hlist');if(!el)return;
+  if(!DB.habits.length){el.innerHTML=`<div class="empty" style="padding:var(--f4);"><span class="eico">🌱</span><div class="etxt">কোনো অভ্যাস নেই<br>"+ অভ্যাস যোগ" করুন</div></div>`;return;}
+  el.innerHTML=DB.habits.map(h=>{
+    const done=isHDone(h.id),st=calcStreak(h),hist=getLast7(h);
+    return `<div class="hitem ${done?'done':''}" onclick="togHabit('${h.id}')">
+      <div class="hck">${done?'✓':''}</div>
+      <div class="hbody"><div class="hname">${h.icon||'⭐'} ${h.name}</div><div class="hstr">🔥 ${st} দিন স্ট্রিক</div></div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+        <div class="hhist">${hist.map(d=>`<div class="hd ${d?'done':''}"></div>`).join('')}</div>
+        <button class="bsm d" style="font-size:9px;padding:2px 6px;" onclick="delHabit(event,'${h.id}')">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function isHDone(id){return !!DB.growth[`h_${id}_${tstr()}`];}
+function togHabit(id){const k=`h_${id}_${tstr()}`;DB.growth[k]=!DB.growth[k];save();renderGrowth();const h=DB.habits.find(x=>x.id===id);if(h)toast(DB.growth[k]?`✓ ${h.name}!`:`${h.name} খোলা হলো`);}
+function calcStreak(habit){let s=0,d=new Date();while(true){if(!DB.growth[`h_${habit.id}_${dateKey(d)}`])break;s++;d.setDate(d.getDate()-1);}return s;}
+function getLast7(habit){return Array.from({length:7},(_,i)=>{const d=new Date();d.setDate(d.getDate()-(6-i));return !!DB.growth[`h_${habit.id}_${dateKey(d)}`];});}
+function renderWhmap(){
+  const el=document.getElementById('whmap');if(!el)return;
+  const today=new Date(),sow=new Date(today);sow.setDate(today.getDate()-today.getDay());el.innerHTML='';
+  for(let i=0;i<7;i++){const d=new Date(sow);d.setDate(sow.getDate()+i);const dk=dateKey(d),isToday=dk===tstr();const tot=DB.habits.length,done2=DB.habits.filter(h=>DB.growth[`h_${h.id}_${dk}`]).length;const cls=tot===0?'':done2===tot&&tot>0?'done':done2>0?'part':'';const lbl=isToday?'আজ':DAYS[d.getDay()];el.innerHTML+=`<div class="whday"><span class="whlbl">${lbl}</span><div class="whcell ${cls} ${isToday?'today':''}">${done2||'·'}</div></div>`;}
+}
+function renderMood(){
+  const td=getTD();
+  document.querySelectorAll('.mbtn').forEach(b=>{
+    b.classList.toggle('sel',Number(b.dataset.mood)===td.mood);
+    b.onclick=()=>{td.mood=Number(b.dataset.mood);save();renderMood();const moods=['','😔 খারাপ লাগছে','😐 ঠিকঠাক','🙂 মোটামুটি','😊 ভালো','🔥 অসাধারণ!'];toast(moods[td.mood]||'মনোবল সেভ');};
+  });
+}
+function saveRef(){const td=getTD();td.reflection=document.getElementById('refnotes').value;save();}
+function loadRef(){const r=document.getElementById('refnotes');if(r)r.value=getTD().reflection||'';}
+function openHabitModal(){document.getElementById('h-name').value='';document.getElementById('h-icon').value='';document.getElementById('m-habit').classList.add('open');setTimeout(()=>document.getElementById('h-name').focus(),400);}
+function submitHabit(){const n=document.getElementById('h-name').value.trim(),ic=document.getElementById('h-icon').value.trim();if(!n){toast('অভ্যাসের নাম দিন');return;}DB.habits.push({id:Date.now().toString(36),name:n,icon:ic||'⭐'});save();closeModal('m-habit');renderGrowth();toast(`"${n}" অভ্যাস যোগ ✓`);}
+function delHabit(e,id){e.stopPropagation();const h=DB.habits.find(x=>x.id===id);DB.habits=DB.habits.filter(x=>x.id!==id);save();renderGrowth();if(h)toast(`"${h.name}" মুছে ফেলা হয়েছে`);}
+
+// ── SETTINGS ─────────────────────────────────
+function renderSets(){
+  const s=DB.sets;
+  const sn=document.getElementById('s-name');if(sn)sn.value=s.name||'';
+  const sw=document.getElementById('s-wake');if(sw)sw.value=s.wakeTime||'06:00';
+  const ss=document.getElementById('s-sleep');if(ss)ss.value=s.sleepTime||'23:00';
+  const sm=document.getElementById('s-mn');if(sm)sm.value=s.morningT||'07:00';
+  const se=document.getElementById('s-en');if(se)se.value=s.eveningT||'20:00';
+  const nt=document.getElementById('notif-tog');if(nt)nt.classList.toggle('on',!!s.notifEnabled);
+  const ct=document.getElementById('circ-tog');if(ct)ct.classList.toggle('on',!!s.circAuto);
+  // User card
+  if(currentUser){
+    const av=document.getElementById('user-avatar');if(av)av.textContent=(currentUser.name||'?')[0].toUpperCase();
+    const nd=document.getElementById('user-name-disp');if(nd)nd.textContent=currentUser.name;
+    const ed=document.getElementById('user-email-disp');if(ed)ed.textContent=currentUser.email;
+  }
+}
+function saveSets(){
+  DB.sets.name=document.getElementById('s-name')?.value||'Sirat';
+  DB.sets.wakeTime=document.getElementById('s-wake')?.value||'06:00';
+  DB.sets.sleepTime=document.getElementById('s-sleep')?.value||'23:00';
+  DB.sets.morningT=document.getElementById('s-mn')?.value||'07:00';
+  DB.sets.eveningT=document.getElementById('s-en')?.value||'20:00';
+  save();updateTimeRem();
+}
+function toggleNotif(){
+  if(!DB.sets.notifEnabled&&Notification){Notification.requestPermission().then(p=>{if(p==='granted'){DB.sets.notifEnabled=true;save();const el=document.getElementById('notif-tog');if(el)el.classList.add('on');toast('নোটিফিকেশন চালু ✓');}else{toast('অনুমতি দেওয়া হয়নি');}});}
+  else{DB.sets.notifEnabled=false;save();const el=document.getElementById('notif-tog');if(el)el.classList.remove('on');toast('নোটিফিকেশন বন্ধ');}
+}
+function confirmReset(){if(confirm('সমস্ত ডেটা মুছে ফেলবেন? এটি পূর্বাবস্থায় ফেরানো যাবে না।')){if(currentUser)localStorage.removeItem(getUserDataKey(currentUser.email));localStorage.removeItem(SK);location.reload();}}
+
+// ── MODAL UTILS ──────────────────────────────
+function closeModal(id){document.getElementById(id)?.classList.remove('open');}
+document.querySelectorAll('.mover').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});});
+document.querySelectorAll('#catsel').forEach(cs=>{cs.addEventListener('click',e=>{const c=e.target.closest('.copt');if(c){cs.querySelectorAll('.copt').forEach(x=>x.classList.remove('active'));c.classList.add('active');curCat=c.dataset.c;}});});
+document.querySelector('#bk-status-sel')?.addEventListener('click',e=>{const r=e.target.closest('.mrad');if(r){document.querySelectorAll('.mrad').forEach(x=>x.classList.remove('active'));r.classList.add('active');curBkStatus=r.dataset.s;}});
+
+// ── TOAST ──────────────────────────────────
+let toastT=null;
+function toast(msg){const el=document.getElementById('toast');if(!el)return;el.textContent=msg;el.classList.add('show');if(toastT)clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('show'),2800);}
+
+// ── ANIMATIONS ──────────────────────────────
+function animN(id,target){
+  const el=document.getElementById(id);if(!el)return;
+  let cur=0,step=Math.max(1,Math.floor(target/30)),iv=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=cur;if(cur>=target)clearInterval(iv);},40);
+}
+function revealView(){document.querySelectorAll('.rev').forEach((el,i)=>{setTimeout(()=>el.classList.add('show'),i*50);});}
+
+// ── SCROLL PROGRESS ─────────────────────────
+window.addEventListener('scroll',()=>{const p=document.getElementById('spb');if(p){const h=document.documentElement.scrollHeight-window.innerHeight,s=window.scrollY;p.style.width=(h>0?(s/h)*100:0)+'%';}},{passive:true});
+
+// ── COMET CURSOR ────────────────────────────
+document.addEventListener('mousemove',e=>{const cg=document.getElementById('cg');if(cg){cg.style.left=e.clientX+'px';cg.style.top=e.clientY+'px';}},{passive:true});
+
+// ── INSTALL ─────────────────────────────────
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;const b=document.getElementById('install-banner');if(b)b.classList.add('visible');});
+document.getElementById('install-btn')?.addEventListener('click',()=>{if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null;const b=document.getElementById('install-banner');if(b)b.classList.remove('visible');});}});
+document.getElementById('close-ib')?.addEventListener('click',()=>{const b=document.getElementById('install-banner');if(b)b.classList.remove('visible');});
+
+// ── THEME BUTTONS ───────────────────────────
+document.querySelectorAll('.tbtn').forEach(b=>{b.addEventListener('click',()=>applyTheme(b.dataset.theme,true));});
+
+// ── NOTIFICATIONS ───────────────────────────
+function schedNotifs(){
+  if(!DB.sets.notifEnabled||!('Notification' in window)||Notification.permission!=='granted')return;
+  const td=getTD(),nm=nowM();
+  td.tasks.filter(t=>!t.done&&t2m(t.startTime)>nm).forEach(t=>{
+    const ms=(t2m(t.startTime)-nm-5)*60000;
+    if(ms>0&&ms<3600000){setTimeout(()=>{if(!getTD().tasks.find(x=>x.id===t.id)?.done)new Notification(`⏰ ${t.title}`,{body:`5 মিনিট পরে শুরু: ${fmt12(t.startTime)}`});},ms);}
+  });
+}
+function checkDailyNotif(){
+  if(!DB.sets.notifEnabled||!('Notification' in window)||Notification.permission!=='granted')return;
+  const n=new Date(),h=n.getHours(),m=n.getMinutes();
+  const [mh,mm]=DB.sets.morningT.split(':').map(Number);
+  const [eh,em]=DB.sets.eveningT.split(':').map(Number);
+  if(h===mh&&m===mm){const td=getTD();new Notification('🌅 সুপ্রভাত!',{body:`আজ ${td.tasks.length}টি টাস্ক আছে।`});}
+  if(h===eh&&m===em){const td=getTD(),done2=td.tasks.filter(t=>t.done).length;new Notification('🌙 সন্ধ্যা রিভিউ',{body:`আজ ${done2}/${td.tasks.length} টাস্ক সম্পন্ন।`});}
+}
+setInterval(checkDailyNotif,60000);
+
+// ── SAMPLE DATA ─────────────────────────────
+function addSampleData(){
+  DB.books=[
+    {id:'b1',title:'Atomic Habits',author:'James Clear',totalPages:320,currentPage:45,dailyTarget:20,icon:'📗',note:'অভ্যাস গঠনের সেরা বই',status:'reading',sessions:[{id:'s1',date:tstr(),from:30,to:45,note:'অধ্যায় ৩ শেষ',ts:Date.now()}],addedDate:tstr()},
+    {id:'b2',title:'রিচ ড্যাড পুওর ড্যাড',author:'Robert Kiyosaki',totalPages:276,currentPage:0,dailyTarget:15,icon:'📕',note:'আর্থিক শিক্ষা',status:'want',sessions:[],addedDate:tstr()}
+  ];
+  DB.habits=[
+    {id:'h1',name:'ফজর নামাজ',icon:'🕌'},
+    {id:'h2',name:'৩০ মিনিট পড়াশোনা',icon:'📚'},
+    {id:'h3',name:'পানি পান (৮ গ্লাস)',icon:'💧'}
+  ];
+  save();
+  setTimeout(()=>{renderDash();renderGrowth();},200);
+}
+
+// ── INIT ────────────────────────────────────
+function initApp(){
+  setupCircadian();
+  renderDash();
+  startClock();
+  setTimeout(revealView,100);
+  renderSets();
+  schedNotifs();
+}
+
+// ── AUTO-LOGIN CHECK ─────────────────────────
+function checkAutoLogin(){
+  // Check theme first (always)
+  setupCircadian();
+  const saved=localStorage.getItem(CLOUD_KEY);
+  if(saved){
+    try{
+      const user=JSON.parse(saved);
+      const users=getUsersDB();
+      if(users[user.email]){
+        loginSuccess(user);
+        return;
+      }
+    }catch(e){}
+  }
+  // Show auth screen
+  document.getElementById('auth-screen').style.display='flex';
+}
+
+// ── KEYBOARD SUPPORT ─────────────────────────
+document.getElementById('l-pass')?.addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+document.getElementById('l-email')?.addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('l-pass')?.focus();});
+document.getElementById('s-pass2')?.addEventListener('keydown',e=>{if(e.key==='Enter')doSignup();});
+
+// ── START ────────────────────────────────────
+checkAutoLogin();
+</script>
+</body>
+</html>
